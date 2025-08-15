@@ -1,12 +1,9 @@
 
-
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React from 'react';
+import Login from './pages/login';
 function App() {
-
-
   return (
+<<<<<<< HEAD
     <>
       <div>
         <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -20,6 +17,11 @@ function App() {
       </div>
     </>
   )
+=======
+    <div>
+<Login />
+    </div>
+  );
+>>>>>>> 7664e0d6543f249495f123ae8d8eb66d2ea3adee
 }
-
-export default App
+export default App; 
