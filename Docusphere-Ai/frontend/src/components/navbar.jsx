@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Button } from '../components/ui/button';
+import { SparklesText } from "../components/ui/SparklesText"
 import { Menu, X } from 'lucide-react';
-
+import BorderAnimationButton from "../components/ui/button"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,18 +25,20 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border' 
+          ? 'bg-white/80 backdrop-blur-xl border-b border-border' 
           : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">D</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 shadow-xl flex items-center justify-center border-2 border-gray-700">
+              <span className="text-cyan-400 font-extrabold text-xl tracking-widest select-none" style={{fontFamily: 'monospace', textShadow: '0 0 8px #06b6d4, 0 0 16px #06b6d4'}}>AI</span>
             </div>
-            <span className="text-xl font-bold text-gradient">DocuSphere</span>
+            <span className="ml-1">
+              <SparklesText className={isScrolled ? "text-black" : "text-white"}>DocuSphere</SparklesText>
+            </span>
           </div>
 
           {/* Desktop Navigation */}
@@ -45,32 +47,31 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="nav-link"
+                className={`nav-link relative px-2 py-1 ${isScrolled ? 'text-black' : 'text-white'} text-gray-700 transition-colors duration-200 hover:text-cyan-400 focus:text-cyan-400 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:rounded-full`}
+                style={{overflow: 'hidden'}}
               >
                 {item.name}
+                {/* Animated underline */}
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-cyan-200 transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
             ))}
           </div>
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-              Login
-            </Button>
-            <Button className="btn-hero">
-              Sign Up
-            </Button>
+            <BorderAnimationButton text ="Login"/>
+            <BorderAnimationButton text ="Sign Up" />
           </div>
 
           {/* Mobile Menu Button */}
-          <Button
+          <BorderAnimationButton
             variant="ghost"
             size="icon"
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
+          </BorderAnimationButton>
         </div>
 
         {/* Mobile Navigation */}
@@ -88,12 +89,13 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="pt-4 space-y-2">
-                <Button variant="ghost" className="w-full justify-start">
-                  Login
-                </Button>
-                <Button className="w-full btn-hero">
-                  Sign Up
-                </Button>
+                <BorderAnimationButton 
+                  text="Login"
+                />
+
+                <BorderAnimationButton 
+                  text = "Sign Up"/>
+                
               </div>
             </div>
           </div>

@@ -1,10 +1,12 @@
-import { Hero } from '@/components/Hero';
-import { Navbar } from '@/components/Navbar';
+import React, { StrictMode } from 'react';
+import HeroPlace from '../components/heroSection.jsx';
+import Navbar from '../components/navbar';
+
 const Home = () => {
   return (
     <div className='min-h-screen'>
       <Navbar />
-      <Hero />
+      <HeroPlace />
     </div>
   );
 }
