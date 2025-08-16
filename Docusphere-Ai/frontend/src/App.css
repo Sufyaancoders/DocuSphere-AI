@@ -34,3 +34,32 @@
 .read-the-docs {
   color: #888;
 }
+.card-glow {
+  box-shadow: 0 4px 32px 0 rgba(0, 180, 255, 0.25), 0 1.5px 8px 0 rgba(0, 180, 255, 0.15);
+  transition: box-shadow 0.3s;
+}
+.card-glow:hover, .card-glow:focus, .group:hover .card-glow {
+  box-shadow: 0 8px 64px 0 rgba(0, 180, 255, 0.35), 0 3px 16px 0 rgba(0, 180, 255, 0.25);
+}
+
+@theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+ 
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+}
