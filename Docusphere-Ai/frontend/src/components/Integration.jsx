@@ -64,7 +64,7 @@ console.log(result.insights);`;
 
         {/* Code Example */}
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 overflow-hidden">
+          <div className="bg-black/20 backdrop-blur-sm border border-border rounded-xl p-6 overflow-hidden">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>

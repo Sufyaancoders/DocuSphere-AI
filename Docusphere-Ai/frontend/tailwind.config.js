@@ -102,5 +102,32 @@ export default {
 			}
 		}
 	},
+// Safelist for custom property utilities used in Glowingeffect
+safelist: [
+  {
+    pattern: /after:\[background:var\(--gradient\)\]/,
+    variants: ['after'],
+  },
+  {
+    pattern: /after:\[background-attachment:fixed\]/,
+    variants: ['after'],
+  },
+  {
+    pattern: /after:\[mask-image:linear-gradient/,
+    variants: ['after'],
+  },
+  {
+    pattern: /after:\[mask-clip:padding-box,border-box\]/,
+    variants: ['after'],
+  },
+  {
+    pattern: /after:\[mask-composite:intersect\]/,
+    variants: ['after'],
+  },
+  {
+    pattern: /after:\[border:var\(--glowingeffect-border-width\)_solid_transparent\]/,
+    variants: ['after'],
+  }
+],
   plugins: [],
 };
