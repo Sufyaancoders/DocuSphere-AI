@@ -1,3 +1,6 @@
+
+
+
 @import "tailwindcss";
 @layer base {
   :root {
@@ -344,3 +347,4 @@
     animation: fadeInUp 0.6s ease-out forwards;
   }
 }
+@tailwind utilities;

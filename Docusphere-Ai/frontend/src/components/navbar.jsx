@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { SparklesText } from "../components/ui/SparklesText"
 import { Menu, X } from 'lucide-react';
 import BorderAnimationButton from "../components/ui/button"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,10 @@ const Navbar = () => {
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <nav
@@ -59,8 +65,8 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <BorderAnimationButton text ="Login"/>
-            <BorderAnimationButton text ="Sign Up" />
+            <BorderAnimationButton text="Login" onClick={handleLogin} />
+            <BorderAnimationButton text="Sign Up" />
           </div>
 
           {/* Mobile Menu Button */}
@@ -89,11 +95,15 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="pt-4 space-y-2">
-                <BorderAnimationButton 
+                <BorderAnimationButton
                   text="Login"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogin();
+                  }}
                 />
 
-                <BorderAnimationButton 
+                <BorderAnimationButton
                   text = "Sign Up"/>
                 
               </div>
