@@ -7,6 +7,7 @@ import Integration from '../components/Integration.jsx';
 import { TextScrollDemo } from '../components/textrun.jsx';
 import GlowCard from '../components/glowcard.jsx';
 import FAQ from '../components/FAQ.jsx';
+import Footer from "../components/Footer.jsx";
 const Home = () => {
   return (
     <div className='min-h-screen'>
@@ -18,6 +19,7 @@ const Home = () => {
       <TextScrollDemo />
       <GlowCard />
       <FAQ />
+      <Footer />
     </div>
   );
 }
