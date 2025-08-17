@@ -64,7 +64,7 @@ const Navbar = () => {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             <BorderAnimationButton text="Login" onClick={handleLogin} />
             <BorderAnimationButton text="Sign Up" />
           </div>

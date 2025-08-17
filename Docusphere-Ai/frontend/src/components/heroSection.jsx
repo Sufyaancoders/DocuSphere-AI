@@ -46,13 +46,13 @@ const HeroPlace = () => {
           <div className="flex flex-col my-10 sm:flex-row gap-4 justify-center items-center">
            <BorderAnimationButton >
               Try Now - Free
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 h-10 w-7 transition-transform group-hover:translate-x-1" />
            </BorderAnimationButton>            
             <BorderAnimationButton 
               variant="outline" 
               
             >
-              <Play className="mr-2 h-5 w-5" />
+              <Play className="mr-2 h-10 w-7" />
               Watch Demo
             </BorderAnimationButton>
           </div>
