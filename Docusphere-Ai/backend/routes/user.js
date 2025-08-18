@@ -1,10 +1,8 @@
 // Docusphere-Ai/backend/routes/user.js
 const express = require('express');
 const router = express.Router();
-
+const {login }= require('../controller/auth')
 // Example route
-router.get('/', (req, res) => {
-  res.json({ message: 'User route working' });
-});
+router.post('/login', login);
 
 module.exports = router;

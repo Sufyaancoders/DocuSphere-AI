@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Github, Mail, User, Lock } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-
+import { setSignupData } from '../slice/auth'; // Assuming you have an authSlice for Redux
 
 import '../components/SignUpPage.css';// Assuming you have a CSS file for additional styles
-
+import {sendOtp} from "../"
 
 
 const SignUpPage = () => {
+    const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,7 +34,8 @@ const SignUpPage = () => {
     e.preventDefault();
     console.log('Sign up submitted:', formData);
   };
-
+     dispatch(setSignupData(formData));
+     dispatch(sendOtp(formData.email, navigate));
   // Inline styles for animations and effects
   const styles = {
     container: {
