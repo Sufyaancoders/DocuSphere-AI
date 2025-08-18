@@ -43,7 +43,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl border-b border-border' 
+          ? 'bg-white/80 backdrop-blur-xl border-b border-gray-200' 
           : 'bg-transparent'
       }`}
     >
@@ -51,7 +51,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-1">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 shadow-xl flex items-center justify-center border-2 border-gray-700">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 shadow-xl flex items-center justify-center border-2 border-black">
               <span className="text-cyan-400 font-extrabold text-xl tracking-widest select-none" style={{fontFamily: 'monospace', textShadow: '0 0 8px #06b6d4, 0 0 16px #06b6d4'}}>AI</span>
             </div>
             <span className="ml-1">
@@ -98,7 +98,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-gray-200">
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a

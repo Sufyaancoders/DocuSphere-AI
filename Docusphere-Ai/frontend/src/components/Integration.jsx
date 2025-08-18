@@ -64,7 +64,7 @@ console.log(result.insights);`;
 
         {/* Code Example */}
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-black/20 backdrop-blur-sm border border-border rounded-xl p-6 overflow-hidden">
+          <div className="bg-black/20 backdrop-blur-sm border border-gray-200 rounded-xl p-6 overflow-hidden">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -129,7 +129,7 @@ console.log(result.insights);`;
             {['JavaScript', 'Python', 'Go', 'Java', 'PHP', 'Ruby'].map((lang, index) => (
               <div 
                 key={index}
-                className="p-4 rounded-lg bg-white/90 border border-border hover:border-blue transition-all duration-300 group cursor-pointer"
+                className="p-4 rounded-lg bg-white/90 border border-gray-200 hover:border-blue transition-all duration-300 group cursor-pointer"
               >
                 <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">
                   {lang === 'JavaScript' && '🟨'}
@@ -155,7 +155,7 @@ console.log(result.insights);`;
             
             <BorderAnimationButton
               variant="outline" 
-              className="bg-background/20 border-border hover:bg-background/30 backdrop-blur-sm"
+              className="bg-background/20 border-gray-200 hover:bg-background/30 backdrop-blur-sm"
             >
               Try in Playground
             </BorderAnimationButton>
