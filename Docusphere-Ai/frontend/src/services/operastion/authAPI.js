@@ -4,7 +4,7 @@ import { setLoading, setToken } from "../../slices/authSlice"
 import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
-import { endpoints } from "../apis"
+import { authEndpoints } from "../apis"
 
 const {
   SENDOTP_API,
@@ -12,7 +12,7 @@ const {
   LOGIN_API,
   RESETPASSTOKEN_API,
   RESETPASSWORD_API,
-} = endpoints
+} = authEndpoints
 // Track if a request is in progress
 let otpRequestInProgress = false;
 export function sendOtp(email, navigate) {
