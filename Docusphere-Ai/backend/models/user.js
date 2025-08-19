@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
   },
   token: {
 			type: String,
-		}
+		},  
+      Image:{
+        type:String,
+        required:true,
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

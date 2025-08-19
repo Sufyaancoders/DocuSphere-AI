@@ -78,23 +78,13 @@ exports.login = async (req, res) => {
 
 
 exports.signUp = async (req, res) => {
-    //data fetching from the body
-    //validate the data
-    //password matching
-    //check if the user already exists
 
-    //find most recent OTP for this email
-    //check if the OTP is valid
-
-    //hash the password
-    //create the user
-    //send the response
      
     try {
-        const { firstName, lastName, email, password, confirmPassword, contactNumber, accountType, otp } = req.body;
+        const { name, email, password, confirmPassword, otp } = req.body;
        
         // Validate required fields
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType || !otp) {
+        if (!name || !email || !password || !confirmPassword || !otp) {
             return res.status(400).json({
                 success: false,
                 message: "All required fields must be provided"
@@ -148,8 +138,8 @@ exports.signUp = async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
         
-        // Set approval status based on account type
-        let approved = accountType === "Instructor" ? false : true;
+        // // Set approval status based on account type
+      
         
         try {
             // Create the Additional Profile For User with ALL required fields
@@ -164,15 +154,10 @@ exports.signUp = async (req, res) => {
             
             // Create user with correct Image field (capital I)
             const user = await User.create({
-                firstName,
-                lastName,
+                name,
                 email,
-                contactNumber: contactNumber || "",
                 password: hashedPassword,
-                accountType,
-                approved,
-                additionalDetails: profileDetails._id,
-                Image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}` // Capital I to match schema
+                Image: `https://api.dicebear.com/5.x/initials/svg?seed=${name}` // Capital I to match schema
             });
             
             // Delete the used OTP
@@ -184,10 +169,8 @@ exports.signUp = async (req, res) => {
                 message: "User registered successfully",
                 user: {
                     _id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
+                    name: user.name,
                     email: user.email,
-                    accountType: user.accountType,
                     image: user.Image
                 }
             });
@@ -206,6 +189,24 @@ exports.signUp = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Failed to sign up',
+            error: error.message
+        });
+    }
+};
+ exports.logout = (req, res) => {
+    try {
+        // Clear the cookie
+        res.clearCookie("token");
+        
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successfully"
+        });
+    } catch (error) {
+        console.error("Logout error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Error logging out",
             error: error.message
         });
     }
