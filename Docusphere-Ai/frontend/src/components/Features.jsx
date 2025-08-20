@@ -30,7 +30,7 @@ const Features = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-gradient">Powerful AI Features</span>
+            <span className="text-white">Powerful AI Features</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Discover our comprehensive suite of AI-powered tools designed to revolutionize 
@@ -51,15 +51,15 @@ const Features = () => {
             >
               {/* Icon */}
               <div className="feature-icon mb-6 group-hover:scale-110">
-                <feature.icon className="w-8 h-8 text-primary" />
+                <feature.icon className="w-8 h-8 text-white" />
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-gradient transition-all duration-300">
+              <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-gradient transition-all duration-300">
                 {feature.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+              <p className="text-muted-foreground leading-relaxed group-hover:text-white/80 transition-colors duration-300">
                 {feature.description}
               </p>
 
