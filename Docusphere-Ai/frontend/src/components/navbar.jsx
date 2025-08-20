@@ -40,8 +40,11 @@ const Navbar = () => {
   const About = () => {
     navigate("/about");
   };
+  const HomeNav = () => {
+    navigate("/");
+  };
   const navItems = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', onClick: HomeNav },
     { name: 'About',  onClick: About },
     { name: 'Contact', href: '#contact' },
   ];
@@ -80,15 +83,15 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-                <a
-        key={item.name}
-        onClick={item.onClick}
-        href={item.href}
-        className={`nav-link relative px-2 py-1 cursor-pointer ${
-          isScrolled ? 'text-black' : 'text-white'
-        } text-gray-700 transition-colors duration-200 hover:text-cyan-400 focus:text-cyan-400 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:rounded-full`}
-        style={{overflow: 'hidden'}}
-      >
+              <a
+                key={item.name}
+                onClick={item.onClick}
+                href={item.href || undefined}
+                className={`nav-link relative px-2 py-1 cursor-pointer ${
+                  isScrolled ? 'text-black' : 'text-white'
+                } text-gray-700 transition-colors duration-200 hover:text-cyan-400 focus:text-cyan-400 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:rounded-full`}
+                style={{overflow: 'hidden'}}
+              >
                 {item.name}
                 {/* Animated underline */}
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-cyan-200 transition-all duration-300 group-hover:w-full rounded-full"></span>
@@ -126,9 +129,15 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <a
                   key={item.name}
-                  href={item.href}
+                  href={item.href || undefined}
                   className="block py-2 text-muted-foreground hover:text-foreground transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={e => {
+                    if (item.onClick) {
+                      item.onClick();
+                      setIsMobileMenuOpen(false);
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   {item.name}
                 </a>

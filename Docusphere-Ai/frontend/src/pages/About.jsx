@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../components/About.css';
-
+import Navbar from '../components/navbar';
 import { 
   Brain, 
   FileText, 
@@ -17,6 +17,7 @@ import {
   RefreshCw,
   Sparkles
 } from 'lucide-react';
+import Footer from "../components/Footer.jsx";
 
 function About() {
   const [isVisible, setIsVisible] = useState({});
@@ -112,6 +113,7 @@ function About() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
+      <Navbar />
       {/* Animated Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
@@ -128,7 +130,7 @@ function About() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
-
+ 
       {/* Hero Section */}
       <section id="hero" className="relative z-10 min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-4xl mx-auto">
@@ -348,20 +350,9 @@ function About() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 py-12 px-4 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Brain className="w-8 h-8 text-cyan-400" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
-              DocuSphere AI
-            </span>
-          </div>
-          <p className="text-gray-400">
-            Transforming documents through the power of Artificial Intelligence
-          </p>
-        </div>
-      </footer>
+
+  {/* Footer */}
+  <Footer />
 
       <style jsx>{`
         @keyframes grid-move {
