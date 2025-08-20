@@ -40,17 +40,17 @@ export const Sidebar = ({ activeSection, onSectionChange, isMobile, isOpen }) =>
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
-            className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ backgroundColor: theme.primary }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-2xl select-none shadow-lg"
+            style={{ backgroundColor: '#fff', color: theme.primary, letterSpacing: '0.1em' }}
           >
-            <Zap size={20} color={theme.background} />
+            AI
           </motion.div>
           <div>
             <h1 className="text-xl font-bold" style={{ color: theme.text }}>
-              AI Dashboard
+              AI DocuSphere
             </h1>
             <p className="text-xs" style={{ color: theme.textSecondary }}>
-              Robotic Intelligence Hub
+              AI Intelligence Hub
             </p>
           </div>
         </div>

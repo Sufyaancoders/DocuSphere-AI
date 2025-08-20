@@ -51,7 +51,7 @@ export default function ProfileDropdown() {
               : "/default-avatar.png"
           }
           alt={`profile-${user?.firstName || "user"}`}
-          className="aspect-square w-8 h-8 rounded-full object-cover border border-gray-200"
+          className="aspect-square w-8 h-8 rounded-full object-cover border border-gray-400"
           onError={(e) => {
             e.target.onerror = null
             e.target.src = "/default-avatar.png"
@@ -64,7 +64,7 @@ export default function ProfileDropdown() {
 
       {/* Dropdown menu */}
       <div
-        className={`absolute right-0 mt-2 min-w-[180px] z-[1000] rounded-xl border border-gray-200 bg-white/50 backdrop-blur-xl shadow-none overflow-hidden transition-all duration-200 origin-top-right ${open ? "scale-100 opacity-100 pointer-events-auto" : "scale-95 opacity-0 pointer-events-none"}`}
+        className={`absolute right-0 mt-2 min-w-[180px] z-[1000] rounded-xl border border-gray-500 bg-white/50 backdrop-blur-xl shadow-none overflow-hidden transition-all duration-200 origin-top-right ${open ? "scale-100 opacity-100 pointer-events-auto" : "scale-95 opacity-0 pointer-events-none"}`}
       >
         <Link to="/dashboard" onClick={() => setOpen(false)}>
           <div className="flex items-center gap-3 px-5 py-3 text-base font-medium text-black hover:text-cyan-400 transition-colors duration-150 cursor-pointer group relative">
