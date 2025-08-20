@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react"
-import { VscChevronDown } from "react-icons/vsc"
-import { VscDashboard, VscSignOut } from "react-icons/vsc"
+import { VscChevronDown, VscDashboard, VscSignOut, VscMenu } from "react-icons/vsc"
 import { Link, useNavigate } from "react-router-dom"
 import useOnClickOutside from "../../hooks/useOnClickOutside"
 
@@ -36,8 +35,13 @@ export default function ProfileDropdown() {
   }
 
   return (
-    <button className="relative" onClick={() => setOpen(true)} ref={ref}>
-      <div className="flex items-center gap-x-1">
+    <div className="relative" ref={ref}>
+      <button
+        className={`flex items-center gap-2 px-2 py-1 rounded-full border border-gray-200 bg-black/40 backdrop-blur-xl transition-all duration-200 focus:outline-none group shadow-none`}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-haspopup="true"
+        aria-expanded={open}
+      >
         <img
           src={
             user?.Image
@@ -47,39 +51,48 @@ export default function ProfileDropdown() {
               : "/default-avatar.png"
           }
           alt={`profile-${user?.firstName || "user"}`}
-          className="aspect-square w-[30px] rounded-full object-cover"
+          className="aspect-square w-8 h-8 rounded-full object-cover border border-gray-200"
           onError={(e) => {
             e.target.onerror = null
             e.target.src = "/default-avatar.png"
           }}
         />
-        <VscChevronDown className="text-sm text-black" />
-      </div>
+        <VscChevronDown
+          className={`ml-1 text-lg text-black transition-transform duration-200 ${open ? "rotate-180" : "rotate-0"}`}
+        />
+      </button>
 
-      {open && (
-        <div className="absolute top-[118%] right-0 z-[1000] divide-y divide-gray-700 overflow-hidden rounded-md border border-gray-700 bg-gray-800 shadow-lg">
-          <Link to="/dashboard" onClick={() => setOpen(false)}>
-            <div className="flex w-full items-center gap-x-2 py-2.5 px-4 text-sm text-gray-200 hover:bg-gray-700 transition-colors duration-200">
-              <VscDashboard className="text-lg" />
+      {/* Dropdown menu */}
+      <div
+        className={`absolute right-0 mt-2 min-w-[180px] z-[1000] rounded-xl border border-gray-200 bg-white/50 backdrop-blur-xl shadow-none overflow-hidden transition-all duration-200 origin-top-right ${open ? "scale-100 opacity-100 pointer-events-auto" : "scale-95 opacity-0 pointer-events-none"}`}
+      >
+        <Link to="/dashboard" onClick={() => setOpen(false)}>
+          <div className="flex items-center gap-3 px-5 py-3 text-base font-medium text-black hover:text-cyan-400 transition-colors duration-150 cursor-pointer group relative">
+            <VscDashboard className="text-xl text-cyan-400 group-hover:text-cyan-600 transition-colors duration-150" />
+            <span className="relative">
               Dashboard
-            </div>
-          </Link>
-
-          <div
-            onClick={() => {
-              localStorage.removeItem("token")
-              localStorage.removeItem("user")
-              window.dispatchEvent(new Event("tokenChanged"))
-              navigate("/")
-              setOpen(false)
-            }}
-            className="flex w-full cursor-pointer items-center gap-x-2 py-2.5 px-4 text-sm text-gray-200 hover:bg-gray-700 transition-colors duration-200"
-          >
-            <VscSignOut className="text-lg" />
-            Logout
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+            </span>
           </div>
+        </Link>
+        <div className="border-t border-gray-100" />
+        <div
+          onClick={() => {
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
+            window.dispatchEvent(new Event("tokenChanged"))
+            navigate("/")
+            setOpen(false)
+          }}
+          className="flex items-center gap-3 px-5 py-3 text-base font-medium text-black hover:text-cyan-400 transition-colors duration-150 cursor-pointer group relative"
+        >
+          <VscSignOut className="text-xl text-cyan-400 group-hover:text-red-500 transition-colors duration-150" />
+          <span className="relative">
+            Logout
+            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+          </span>
         </div>
-      )}
-    </button>
+      </div>
+    </div>
   )
 }
