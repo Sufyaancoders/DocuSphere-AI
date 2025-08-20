@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { SparklesText } from "../components/ui/SparklesText"
 import { Menu, X } from 'lucide-react';
 import BorderAnimationButton from "../components/ui/button"
-
+import ProfileDropdown from "./auth/ProfileDropDown.jsx"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +19,24 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  
+  // Listen for token changes (login/logout) and custom event from logout
+  useEffect(() => {
+    const handleTokenChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleTokenChange);
+    window.addEventListener("tokenChanged", handleTokenChange);
+    return () => {
+      window.removeEventListener("storage", handleTokenChange);
+      window.removeEventListener("tokenChanged", handleTokenChange);
+    };
+  }, []);
+
+  // Also update token on mount
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+
   const About = () => {
     navigate("/about");
   };
@@ -80,9 +98,14 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <BorderAnimationButton text="Login" onClick={handleLogin } />
-            <BorderAnimationButton text="Sign Up" onClick={SignUpPage} />
-           
+            {token ? (
+              <ProfileDropdown />
+            ) : (
+              <>
+                <BorderAnimationButton text="Login" onClick={handleLogin } />
+                <BorderAnimationButton text="Sign Up" onClick={SignUpPage} />
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -111,17 +134,26 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="pt-4 space-y-2">
-                <BorderAnimationButton
-                  text="Login"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleLogin();
-                  }}
-                />
-
-                <BorderAnimationButton
-                  text = "Sign Up"/>
-                
+                {token ? (
+                  <ProfileDropdown />
+                ) : (
+                  <>
+                    <BorderAnimationButton
+                      text="Login"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        handleLogin();
+                      }}
+                    />
+                    <BorderAnimationButton
+                      text="Sign Up"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        SignUpPage();
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>

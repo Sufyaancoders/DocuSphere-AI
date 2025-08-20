@@ -1,16 +1,13 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({children}) => {
+    const token = localStorage.getItem("token");
 
-    const {token} = useSelector((state) => state.auth);
-
-    if(token !== null)
+    if(token)
         return children
     else
         return <Navigate to="/login" />
-
 }
 
 export default PrivateRoute
