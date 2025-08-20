@@ -62,7 +62,7 @@ function Login() {
                 ease: 'easeInOut',
               }}
             >
-              CYBER
+              AI DocuSphere
               <br />
               <span className="text-cyan-400">LOGIN</span>
             </motion.h2>
