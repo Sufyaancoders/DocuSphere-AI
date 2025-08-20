@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { setSignupData } from '../slice/auth'; // Assuming you have an authSlice for Redux
 
 import '../components/SignUpPage.css';// Assuming you have a CSS file for additional styles
-import {sendOtp} from "../"
+import {sendOtp} from "../services/operation/authAPI"; // Import the sendOtp function from your API service
 
 
 const SignUpPage = () => {
@@ -32,11 +32,13 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setSignupData(formData));
+    // Persist signupData to localStorage for OTP step
+    localStorage.setItem("signupData", JSON.stringify(formData));
+    dispatch(sendOtp(formData.email, navigate));
     console.log('Sign up submitted:', formData);
   };
-     dispatch(setSignupData(formData));
-     dispatch(sendOtp(formData.email, navigate));
-  // Inline styles for animations and effects
+     // Inline styles for animations and effects
   const styles = {
     container: {
       minHeight: '100vh',
@@ -171,7 +173,8 @@ const SignUpPage = () => {
       background: 'rgba(17, 24, 39, 0.5)',
       border: '1px solid #374151',
       borderRadius: '0.5rem',
-      color: 'white',
+      color: '#00d4ff',
+      fontFamily: "'Orbitron', 'Courier New', monospace",
       fontSize: '1rem',
       transition: 'all 0.3s ease',
       outline: 'none'

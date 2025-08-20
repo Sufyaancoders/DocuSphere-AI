@@ -1,7 +1,8 @@
 const OTP = require('../models/otp');
 const User= require("../models/user")
 const sendEmail = require('../util/mailsender');
-const { otpVerificationEmail } = require('../mail/templates/emailVerificationTemplete');
+const { otpVerificationEmail } = require('../mail/emailVerificationTemplete');
+const otpGenerator = require('otp-generator');
 exports.sendOTP = async (req, res) => {
     try {
         const { email } = req.body;

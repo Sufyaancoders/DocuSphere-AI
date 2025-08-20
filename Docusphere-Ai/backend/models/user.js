@@ -14,12 +14,24 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   token: {
-			type: String,
-		},  
-      Image:{
-        type:String,
-        required:true,
-    },
+    type: String,
+  },
+  Image: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  resetPasswordToken: {
+    type: String,
+    default: undefined
+  },
+  resetPasswordExpiry: {
+    type: Date,
+    default: undefined
+  }
 });
 
 module.exports = mongoose.model('User', userSchema);

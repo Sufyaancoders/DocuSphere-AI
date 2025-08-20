@@ -4,87 +4,79 @@ const path = require('path');
 // Improved template with additional professional elements
 exports.otpVerificationEmail = (otp, name ) => {
   const currentYear = new Date().getFullYear();
-  
+
   return `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Verification</title>
+  <title>AI DocuSphere OTP Verification</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, Helvetica, sans-serif; background-color: #f4f4f4;">
-  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-    <!-- HEADER WITH LOGO -->
+<body style="margin:0; padding:0; font-family:'Segoe UI',Arial,Helvetica,sans-serif; background: #181A20;">
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse; max-width:600px; margin:0 auto; box-shadow:0 4px 24px rgba(0,0,0,0.5); border-radius:16px; overflow:hidden; background:#23263a;">
+    <!-- HEADER WITH AI ROBOT LOGO -->
     <tr>
-      <td style="padding: 25px 0; text-align: center; background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);">
-        <img src="https://via.placeholder.com/120x40/ffffff/4f46e5?text=SkillHouse" alt="SkillHouse" style="height: 40px; margin-bottom: 10px;">
-        <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 600;">SkillHouse</h1>
+      <td style="padding:32px 0 16px 0; text-align:center; background:linear-gradient(135deg,#23263a 0%,#0ff1ce 100%);">
+        <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/robot.svg" alt="AI Robot" style="height:60px; margin-bottom:12px; filter:drop-shadow(0 0 8px #0ff1ce);">
+        <h1 style="color:#0ff1ce; margin:0; font-size:28px; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #0ff1ce;">AI DocuSphere</h1>
+        <p style="color:#b3b8d4; margin:8px 0 0 0; font-size:16px; letter-spacing:1px;">AI-Powered Document Intelligence</p>
       </td>
     </tr>
-    
     <!-- MAIN CONTENT -->
     <tr>
-      <td style="padding: 40px 30px; background-color: #ffffff;">
-        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+      <td style="padding:40px 30px 30px 30px; background:#23263a;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
           <!-- TITLE -->
           <tr>
-            <td style="text-align: center; padding-bottom: 25px;">
-              <h2 style="margin: 0; color: #333333; font-weight: 600;">Verify Your Email Address</h2>
-              <p style="margin: 10px 0 0 0; color: #666666; font-size: 15px;">Complete your registration to access our courses</p>
+            <td style="text-align:center; padding-bottom:24px;">
+              <h2 style="margin:0; color:#0ff1ce; font-weight:700; font-size:22px; letter-spacing:1px;">Verify Your Email</h2>
+              <p style="margin:12px 0 0 0; color:#b3b8d4; font-size:15px;">Welcome to the future of document automation.</p>
             </td>
           </tr>
-          
           <!-- GREETING -->
           <tr>
-            <td style="padding-bottom: 20px;">
-              <p style="margin: 0; color: #555555; font-size: 16px;">Hello <strong style="color: #4f46e5;">${name}</strong>,</p>
-              <p style="margin: 15px 0 0 0; color: #555555; line-height: 1.5;">Thank you for registering with SkillHouse! Please use the following verification code to complete your registration and start your learning journey with us:</p>
+            <td style="padding-bottom:20px;">
+              <p style="margin:0; color:#fff; font-size:17px;">Hello <strong style="color:#0ff1ce;">${name}</strong>,</p>
+              <p style="margin:16px 0 0 0; color:#b3b8d4; line-height:1.6;">Your AI-powered journey begins here. Use the OTP below to verify your email and unlock advanced document intelligence features.</p>
             </td>
           </tr>
-          
           <!-- OTP CODE -->
           <tr>
-            <td style="padding: 20px 0; text-align: center;">
-              <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto; background-color: #f7f7f7; border-radius: 10px; padding: 20px; border: 1px solid #e5e7eb;">
-                <tr>
-                  <td style="text-align: center;">
-                    <p style="margin: 0 0 10px 0; color: #777777; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Your verification code</p>
-                    <div style="font-family: 'Courier New', monospace; font-size: 32px; font-weight: bold; color: #4f46e5; letter-spacing: 5px; padding: 10px 15px; background-color: #ffffff; border-radius: 6px; border: 1px solid #e0e0e0;">${otp}</div>
-                    <p style="margin: 15px 0 0 0; color: #dc2626; font-size: 13px; font-weight: 500;">Expires in 10 minutes</p>
-                  </td>
-                </tr>
-              </table>
+            <td style="padding:24px 0; text-align:center;">
+              <div style="display:inline-block; background:#181A20; border-radius:12px; border:2px solid #0ff1ce; padding:24px 40px; box-shadow:0 0 16px #0ff1ce44;">
+                <p style="margin:0 0 10px 0; color:#0ff1ce; font-size:14px; text-transform:uppercase; letter-spacing:2px;">Your OTP Code</p>
+                <div style="font-family:'Courier New',monospace; font-size:36px; font-weight:bold; color:#fff; letter-spacing:8px; padding:12px 0; text-shadow:0 0 12px #0ff1ce;">${otp}</div>
+                <p style="margin:14px 0 0 0; color:#ff4b82; font-size:13px; font-weight:600;">Expires in 10 minutes</p>
+              </div>
             </td>
           </tr>
-          
           <!-- SECURITY NOTE -->
           <tr>
-            <td style="padding: 25px 0 15px 0; text-align: center; border-top: 1px solid #f0f0f0; margin-top: 20px;">
-              <p style="margin: 0; color: #555555; font-size: 15px;">If you did not request this verification code, please ignore this email or contact our support team.</p>
-              <a href="mailto:support@skillhouse.com" style="color: #4f46e5; text-decoration: none; font-weight: 500; margin-top: 10px; display: inline-block;">Need help?</a>
+            <td style="padding:28px 0 10px 0; text-align:center; border-top:1px solid #2d3148;">
+              <p style="margin:0; color:#b3b8d4; font-size:15px;">If you did not request this code, please ignore this email or contact our support team.</p>
+              <a href="mailto:support@docusphere.ai" style="color:#0ff1ce; text-decoration:none; font-weight:600; margin-top:10px; display:inline-block;">Contact Support</a>
             </td>
           </tr>
-          
-          <!-- BENEFITS -->
+          <!-- AI BENEFITS -->
           <tr>
-            <td style="padding: 30px 0 10px 0;">
-              <h3 style="color: #333333; margin: 0 0 15px 0; font-weight: 600; text-align: center; font-size: 18px;">Why Join SkillHouse?</h3>
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+            <td style="padding:32px 0 0 0;">
+              <h3 style="color:#0ff1ce; margin:0 0 18px 0; font-weight:700; text-align:center; font-size:18px; letter-spacing:1px;">Why AI DocuSphere?</h3>
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                  <td style="width: 33%; padding: 10px; text-align: center; vertical-align: top;">
-                    <div style="font-size: 20px; margin-bottom: 10px;">📚</div>
-                    <p style="font-weight: 600; margin: 0 0 5px 0; color: #4f46e5;">Expert Instructors</p>
-                    <p style="margin: 0; color: #666666; font-size: 13px;">Learn from industry professionals</p>
+                  <td style="width:33%; padding:12px; text-align:center; vertical-align:top;">
+                    <div style="font-size:28px; margin-bottom:10px; color:#0ff1ce;">🤖</div>
+                    <p style="font-weight:700; margin:0 0 5px 0; color:#fff;">AI Automation</p>
+                    <p style="margin:0; color:#b3b8d4; font-size:13px;">Automate document workflows</p>
                   </td>
-                  <td style="width: 33%; padding: 10px; text-align: center; vertical-align: top;">
-                    <div style="font-size: 20px; margin-bottom: 10px;">🏆</div>
-                    <p style="font-weight: 600; margin: 0 0 5px 0; color: #4f46e5;">Certificates</p>
-                    <p style="margin: 0; color: #666666; font-size: 13px;">Earn recognized credentials</p>
+                  <td style="width:33%; padding:12px; text-align:center; vertical-align:top;">
+                    <div style="font-size:28px; margin-bottom:10px; color:#0ff1ce;">🔒</div>
+                    <p style="font-weight:700; margin:0 0 5px 0; color:#fff;">Secure & Private</p>
+                    <p style="margin:0; color:#b3b8d4; font-size:13px;">Your data stays protected</p>
                   </td>
-                  <td style="width: 33%; padding: 10px; text-align: center; vertical-align: top;">
-                    <div style="font-size: 20px; margin-bottom: 10px;">💻</div>
-                    <p style="font-weight: 600; margin: 0 0 5px 0; color: #4f46e5;">Hands-on Projects</p>
-                    <p style="margin: 0; color: #666666; font-size: 13px;">Build your portfolio</p>
+                  <td style="width:33%; padding:12px; text-align:center; vertical-align:top;">
+                    <div style="font-size:28px; margin-bottom:10px; color:#0ff1ce;">⚡</div>
+                    <p style="font-weight:700; margin:0 0 5px 0; color:#fff;">Lightning Fast</p>
+                    <p style="margin:0; color:#b3b8d4; font-size:13px;">Instant document processing</p>
                   </td>
                 </tr>
               </table>
@@ -93,33 +85,14 @@ exports.otpVerificationEmail = (otp, name ) => {
         </table>
       </td>
     </tr>
-    
     <!-- FOOTER -->
     <tr>
-      <td style="padding: 25px; text-align: center; background-color: #f7f7f7; border-top: 1px solid #e5e7eb;">
-        <!-- SOCIAL LINKS -->
-        <div style="margin-bottom: 20px;">
-          <a href="#" style="text-decoration: none; margin: 0 8px;"><img src="https://via.placeholder.com/30x30/4f46e5/ffffff?text=fb" style="width: 30px; height: 30px; border-radius: 15px;" alt="Facebook"></a>
-          <a href="#" style="text-decoration: none; margin: 0 8px;"><img src="https://via.placeholder.com/30x30/4f46e5/ffffff?text=in" style="width: 30px; height: 30px; border-radius: 15px;" alt="LinkedIn"></a>
-          <a href="#" style="text-decoration: none; margin: 0 8px;"><img src="https://via.placeholder.com/30x30/4f46e5/ffffff?text=tw" style="width: 30px; height: 30px; border-radius: 15px;" alt="Twitter"></a>
-          <a href="#" style="text-decoration: none; margin: 0 8px;"><img src="https://via.placeholder.com/30x30/4f46e5/ffffff?text=ig" style="width: 30px; height: 30px; border-radius: 15px;" alt="Instagram"></a>
-        </div>
-        
-        <!-- COPYRIGHT AND ADDRESS -->
-        <p style="margin: 0; color: #777777; font-size: 14px;">&copy; ${currentYear} SkillHouse. All rights reserved.</p>
-        <p style="margin: 10px 0 0 0; color: #777777; font-size: 14px;">123 Education Street, Knowledge City</p>
-        
-        <!-- APP DOWNLOAD LINKS -->
-        <p style="margin: 20px 0 0 0; color: #666666; font-size: 14px;">Get our mobile app:</p>
-        <div style="margin-top: 10px;">
-          <a href="#" style="display: inline-block; margin: 0 5px;"><img src="https://via.placeholder.com/120x40/000000/ffffff?text=App+Store" style="height: 35px; border-radius: 5px;" alt="App Store"></a>
-          <a href="#" style="display: inline-block; margin: 0 5px;"><img src="https://via.placeholder.com/120x40/000000/ffffff?text=Google+Play" style="height: 35px; border-radius: 5px;" alt="Google Play"></a>
-        </div>
-        
-        <!-- UNSUBSCRIBE -->
-        <p style="margin-top: 20px; color: #999999; font-size: 12px;">
-          This email was sent to you because you registered for an account with SkillHouse.<br>
-          If you prefer not to receive these emails, you can <a href="#" style="color: #777777; text-decoration: underline;">unsubscribe</a>.
+      <td style="padding:24px; text-align:center; background:#181A20; border-top:1px solid #2d3148;">
+        <p style="margin:0; color:#b3b8d4; font-size:13px;">&copy; ${currentYear} AI DocuSphere. All rights reserved.</p>
+        <p style="margin:8px 0 0 0; color:#2de3c4; font-size:13px;">Made by AI, for humans.</p>
+        <p style="margin:18px 0 0 0; color:#44495e; font-size:12px;">
+          This email was sent to you because you registered for AI DocuSphere.<br>
+          If you prefer not to receive these emails, you can <a href="#" style="color:#0ff1ce; text-decoration:underline;">unsubscribe</a>.
         </p>
       </td>
     </tr>

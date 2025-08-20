@@ -1,8 +1,6 @@
 import { toast } from "react-hot-toast"
 
-import { setLoading, setToken } from "../../slices/authSlice"
-import { resetCart } from "../../slices/cartSlice"
-import { setUser } from "../../slices/profileSlice"
+import { setLoading, setToken } from "../../slice/auth"
 import { apiConnector } from "../apiconnector"
 import { authEndpoints } from "../apis"
 
@@ -52,14 +50,11 @@ export function sendOtp(email, navigate) {
 }
 
 export function signUp(
-  accountType,
-  firstName,
-  lastName,
+  name,
   email,
   password,
   confirmPassword,
   otp,
-  contactNumber,
   navigate
 ) {
   return async (dispatch) => {
@@ -69,19 +64,17 @@ export function signUp(
     try {
       // Log what's being sent for debugging
       console.log("Sending signup data:", {
-        accountType, firstName, lastName, email, 
-        contactNumber: contactNumber || "",
+        name,
+        email,
         // Don't log passwords
       });
       
       const response = await apiConnector("POST", SIGNUP_API, {
-        accountType,
-        firstName,
-        lastName,
+        name,
+        
         email,
         password,
         confirmPassword,
-        contactNumber: contactNumber || "",
         otp,
       })
 
@@ -146,14 +139,11 @@ export function login(email, password, navigate) {
 
       toast.success("Login Successful")
       dispatch(setToken(response.data.token))
-      const userImage = response.data?.user?.image
-        ? response.data.user.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({ ...response.data.user, image: userImage }))
+
       
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
-      navigate("/dashboard/my-profile")
+      navigate("/dashboard")
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
       toast.error("Login Failed")
@@ -166,8 +156,7 @@ export function login(email, password, navigate) {
 export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null))
-    dispatch(setUser(null))
-    dispatch(resetCart())
+
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     toast.success("Logged Out")

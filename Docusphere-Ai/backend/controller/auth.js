@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const OTP = require('../models/otp');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 exports.login = async (req, res) => {
     try {
@@ -141,48 +143,28 @@ exports.signUp = async (req, res) => {
         // // Set approval status based on account type
       
         
-        try {
-            // Create the Additional Profile For User with ALL required fields
-            const profileDetails = await Profile.create({
-                gender: "Not specified",
-                dob: new Date(), // Current date
-                about: "No information provided",
-                phone: contactNumber || "Not provided", 
-                location: "Not specified",
-                education: "Not specified"
-            });
-            
-            // Create user with correct Image field (capital I)
-            const user = await User.create({
-                name,
-                email,
-                password: hashedPassword,
-                Image: `https://api.dicebear.com/5.x/initials/svg?seed=${name}` // Capital I to match schema
-            });
-            
-            // Delete the used OTP
-            await OTP.deleteOne({ _id: otpRecord._id });
-            
-            // Return success response
-            return res.status(201).json({
-                success: true,
-                message: "User registered successfully",
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    image: user.Image
-                }
-            });
-            
-        } catch (profileError) {
-            console.error("Error creating profile or user:", profileError);
-            return res.status(500).json({
-                success: false,
-                message: "Failed to create profile or user",
-                error: profileError.message
-            });
-        }
+        // Create user with correct Image field (capital I)
+        const user = await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            Image: `https://api.dicebear.com/5.x/initials/svg?seed=${name}` // Capital I to match schema
+        });
+
+        // Delete the used OTP
+        await OTP.deleteOne({ _id: otpRecord._id });
+
+        // Return success response
+        return res.status(201).json({
+            success: true,
+            message: "User registered successfully",
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                image: user.Image
+            }
+        });
         
     } catch (error) {
         console.error('Error signing up:', error);
