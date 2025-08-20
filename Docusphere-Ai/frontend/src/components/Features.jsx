@@ -1,5 +1,6 @@
 import { FileSearch, Bot, Settings } from 'lucide-react';
 import AIBackground from './AIBackground';
+import { RainbowButton } from "../components/ui/rainBowButton";
 
 const Features = () => {
   const features = [
@@ -70,10 +71,10 @@ const Features = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-gray-800/10 border border-primary/20">
-            <span className="text-sm text-primary font-medium">
-              🚀 Ready to experience the future of AI? Start your journey today
+        <div className="text-center mt-22">
+          <div className="inline-flex items-center px-6 py-3 rounded-full ">
+            <span className="">
+              <RainbowButton variant="outline">🚀 Ready to experience the future of AI? Start your journey today</RainbowButton>
             </span>
           </div>
         </div>
