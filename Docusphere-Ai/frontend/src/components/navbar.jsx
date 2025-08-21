@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { SparklesText } from "../components/ui/SparklesText"
 import { Menu, X } from 'lucide-react';
@@ -7,9 +6,7 @@ import BorderAnimationButton from "../components/ui/button"
 import ProfileDropdown from "./auth/ProfileDropDown.jsx"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { token } = useSelector((state) => state.auth);
-  console.log('Navbar token:', token);
-  console.log('Navbar token:', token);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,7 +19,23 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // No need to sync token with localStorage or listen for events, Redux state is now the source of truth.
+  // Listen for token changes (login/logout) and custom event from logout
+  useEffect(() => {
+    const handleTokenChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleTokenChange);
+    window.addEventListener("tokenChanged", handleTokenChange);
+    return () => {
+      window.removeEventListener("storage", handleTokenChange);
+      window.removeEventListener("tokenChanged", handleTokenChange);
+    };
+  }, []);
+
+  // Also update token on mount
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
 
   const About = () => {
     navigate("/about");

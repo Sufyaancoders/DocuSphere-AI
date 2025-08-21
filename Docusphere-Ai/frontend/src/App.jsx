@@ -12,22 +12,14 @@ import OpenRoute from './components/auth/OpenRoute'
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PrivateRoute from './components/auth/PrivateRoute'
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { setToken } from './slice/auth'
-
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    dispatch(setToken(token));
-  }, [dispatch]);
   return (
     <>
       <div>
        <Routes>
         <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
+       
         <Route path="/login" element={
             <OpenRoute><Login /></OpenRoute>
         } />
@@ -36,6 +28,7 @@ function App() {
             <SignUpPage />
           </OpenRoute>
         } />
+
           <Route
           path="verify-email"
           element={
@@ -50,6 +43,8 @@ function App() {
             </PrivateRoute>
           }
         />
+
+      
        </Routes>
       </div>
     </>
