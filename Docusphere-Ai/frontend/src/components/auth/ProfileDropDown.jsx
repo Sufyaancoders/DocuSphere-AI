@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect } from "react"
 import { VscChevronDown, VscDashboard, VscSignOut, VscMenu } from "react-icons/vsc"
 import { Link, useNavigate } from "react-router-dom"
 import useOnClickOutside from "../../hooks/useOnClickOutside"
-
+import { useDispatch } from "react-redux"
+import { logout } from "../../services/operation/authAPI"
 export default function ProfileDropdown() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
-
+const dispatch = useDispatch()
+ 
   // Check for token validity (simple presence check)
   const token = localStorage.getItem("token")
   const isTokenValid = !!token
@@ -37,7 +39,7 @@ export default function ProfileDropdown() {
   return (
     <div className="relative" ref={ref}>
       <button
-        className={`flex items-center gap-2 px-2 py-1 rounded-full border border-gray-200 bg-black/40 backdrop-blur-xl transition-all duration-200 focus:outline-none group shadow-none`}
+        className={`flex items-center gap-2 px-2 py-1 rounded-full border border-gray-400 bg-black/40 backdrop-blur-xl transition-all duration-200 focus:outline-none group shadow-none`}
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="true"
         aria-expanded={open}
@@ -78,11 +80,8 @@ export default function ProfileDropdown() {
         <div className="border-t border-gray-100" />
         <div
           onClick={() => {
-            localStorage.removeItem("token")
-            localStorage.removeItem("user")
-            window.dispatchEvent(new Event("tokenChanged"))
-            navigate("/")
-            setOpen(false)
+            dispatch(logout(navigate));
+            setOpen(false);
           }}
           className="flex items-center gap-3 px-5 py-3 text-base font-medium text-black hover:text-cyan-400 transition-colors duration-150 cursor-pointer group relative"
         >

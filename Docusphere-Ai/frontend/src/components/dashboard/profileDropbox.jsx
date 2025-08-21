@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, LogOut, ChevronDown } from "lucide-react";
 import { useTheme } from "../../hooks/usetheme";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"
+import { logout } from "../../services/operation/authAPI";
 export const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme } = useTheme();
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
     console.log("Logout clicked");
+    dispatch(logout(navigate));
     // 🔑 Add logout logic here (e.g., clear auth token, redirect, etc.)
   };
 

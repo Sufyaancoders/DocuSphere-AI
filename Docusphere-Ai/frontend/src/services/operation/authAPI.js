@@ -160,6 +160,8 @@ export function logout(navigate) {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     toast.success("Logged Out")
+    // Notify other tabs/components about token change
+    window.dispatchEvent(new Event("tokenChanged"))
     navigate("/")
   }
 }
