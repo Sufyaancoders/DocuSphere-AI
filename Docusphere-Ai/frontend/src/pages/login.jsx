@@ -7,8 +7,11 @@ import AnimatedGrid from '../components/AnimatedGrid';
 import DataStream from '../components/DataStream';
 import GlowingOrbs from '../components/GlowingOrbs';
 import LoginForm from '../components/LoginForm';
+import { useNavigate } from 'react-router-dom';
+import{Forgetpage}from './Forgetpage.jsx'; // Importing Forgetpage component
 
 function Login() {
+  const navigate = useNavigate(); // Corrected placement of useNavigate
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       {/* Background Effects */}
@@ -107,6 +110,14 @@ function Login() {
           {/* Right side - Login Form */}
           <div className="w-full">
             <LoginForm />
+            <div className="text-center mt-4">
+              <button
+                onClick={() => navigate("/Forgetpage")}
+                className="text-sm text-cyan-400 hover:underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
