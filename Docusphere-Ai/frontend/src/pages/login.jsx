@@ -8,7 +8,7 @@ import DataStream from '../components/DataStream';
 import GlowingOrbs from '../components/GlowingOrbs';
 import LoginForm from '../components/LoginForm';
 import { useNavigate } from 'react-router-dom';
-import{Forgetpage}from './Forgetpage.jsx'; // Importing Forgetpage component
+// Importing Forgetpage component
 
 function Login() {
   const navigate = useNavigate(); // Corrected placement of useNavigate
@@ -65,7 +65,7 @@ function Login() {
                 ease: 'easeInOut',
               }}
             >
-              CYBER
+              AI DocuSphere
               <br />
               <span className="text-cyan-400">LOGIN</span>
             </motion.h2>

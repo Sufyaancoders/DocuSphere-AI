@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Github, Mail, User, Lock } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-
+import { setSignupData } from '../slice/auth'; // Assuming you have an authSlice for Redux
 
 import '../components/SignUpPage.css';// Assuming you have a CSS file for additional styles
-
+import {sendOtp} from "../services/operation/authAPI"; // Import the sendOtp function from your API service
 
 
 const SignUpPage = () => {
+    const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -28,10 +32,13 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setSignupData(formData));
+    // Persist signupData to localStorage for OTP step
+    localStorage.setItem("signupData", JSON.stringify(formData));
+    dispatch(sendOtp(formData.email, navigate));
     console.log('Sign up submitted:', formData);
   };
-
-  // Inline styles for animations and effects
+     // Inline styles for animations and effects
   const styles = {
     container: {
       minHeight: '100vh',
@@ -149,27 +156,49 @@ const SignUpPage = () => {
       position: 'relative'
     },
     inputIcon: {
-      position: 'absolute',
-      left: '0.75rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: '#9ca3af',
-      width: '1.25rem',
-      height: '1.25rem'
+  position: 'absolute',
+  left: '0.85rem',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  color: '#67e8f9',
+  width: '1.35rem',
+  height: '1.35rem',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 2
     },
     input: {
-      width: '100%',
-      paddingLeft: '3rem',
-      paddingRight: '1rem',
-      paddingTop: '0.75rem',
-      paddingBottom: '0.75rem',
-      background: 'rgba(17, 24, 39, 0.5)',
-      border: '1px solid #374151',
+  width: '100%',
+  minWidth: 0,
+  boxSizing: 'border-box',
+  display: 'block',
+  paddingLeft: '2.5rem',
+  paddingRight: '1rem',
+  paddingTop: 0,
+  paddingBottom: 0,
+  height: '2.75rem',
+  minHeight: '2.75rem',
+  lineHeight: '2.75rem',
+      background: 'rgba(17, 24, 39, 0.7)',
+      border: '1.5px solid #00d4ff',
       borderRadius: '0.5rem',
-      color: 'white',
-      fontSize: '1rem',
+      color: '#e0f2fe',
+  fontFamily: "'Inter', 'Segoe UI', 'Arial', sans-serif",
+      fontSize: '1.05rem',
+      fontWeight: 500,
+      letterSpacing: '0.04em',
       transition: 'all 0.3s ease',
-      outline: 'none'
+      outline: 'none',
+      boxShadow: '0 2px 8px 0 rgba(0,212,255,0.08)',
+      caretColor: '#00d4ff',
+      '::placeholder': {
+        color: '#67e8f9',
+        opacity: 1,
+        fontFamily: "'Inter', 'Segoe UI', 'Arial', sans-serif",
+        fontWeight: 400
+      }
     },
     inputFocus: {
       borderColor: '#00d4ff',
@@ -493,8 +522,8 @@ const SignUpPage = () => {
                   <User style={styles.inputIcon} />
                   <input
                     type="text"
-                    name="fullName"
-                    value={formData.fullName}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     style={styles.input}
                     placeholder="Enter your full name"

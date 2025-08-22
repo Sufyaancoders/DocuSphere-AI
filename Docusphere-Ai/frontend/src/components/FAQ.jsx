@@ -72,7 +72,7 @@ pauseBetweenAnimations={1}
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className="border border-border rounded-lg mb-4 overflow-hidden hover:border-blue/30 transition-all duration-300"
+              className="border border-gray-200 rounded-lg mb-4 overflow-hidden hover:border-blue/30 transition-all duration-300"
             >
               <button
                 onClick={() => toggleFAQ(index)}
@@ -92,7 +92,7 @@ pauseBetweenAnimations={1}
               
               {openIndex === index && (
                 <div className="px-6 pb-6">
-                  <div className="border-t border-border pt-4">
+                  <div className="border-t border-gray-200 pt-4">
                     <p className="text-white/60 leading-relaxed">
                       {faq.answer}
                     </p>

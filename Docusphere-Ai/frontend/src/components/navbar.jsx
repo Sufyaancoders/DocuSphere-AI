@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { SparklesText } from "../components/ui/SparklesText"
 import { Menu, X } from 'lucide-react';
 import BorderAnimationButton from "../components/ui/button"
-
+import ProfileDropdown from "./auth/ProfileDropDown.jsx"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,12 +19,32 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  
+  // Listen for token changes (login/logout) and custom event from logout
+  useEffect(() => {
+    const handleTokenChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleTokenChange);
+    window.addEventListener("tokenChanged", handleTokenChange);
+    return () => {
+      window.removeEventListener("storage", handleTokenChange);
+      window.removeEventListener("tokenChanged", handleTokenChange);
+    };
+  }, []);
+
+  // Also update token on mount
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+
   const About = () => {
     navigate("/about");
   };
+  const HomeNav = () => {
+    navigate("/");
+  };
   const navItems = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', onClick: HomeNav },
     { name: 'About',  onClick: About },
     { name: 'Contact', href: '#contact' },
   ];
@@ -43,7 +64,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl border-b border-border' 
+          ? 'bg-white/80 backdrop-blur-xl border-b border-gray-200' 
           : 'bg-transparent'
       }`}
     >
@@ -51,7 +72,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-1">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 shadow-xl flex items-center justify-center border-2 border-gray-700">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 shadow-xl flex items-center justify-center border-2 border-black">
               <span className="text-cyan-400 font-extrabold text-xl tracking-widest select-none" style={{fontFamily: 'monospace', textShadow: '0 0 8px #06b6d4, 0 0 16px #06b6d4'}}>AI</span>
             </div>
             <span className="ml-1">
@@ -62,15 +83,15 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-                <a
-        key={item.name}
-        onClick={item.onClick}
-        href={item.href}
-        className={`nav-link relative px-2 py-1 cursor-pointer ${
-          isScrolled ? 'text-black' : 'text-white'
-        } text-gray-700 transition-colors duration-200 hover:text-cyan-400 focus:text-cyan-400 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:rounded-full`}
-        style={{overflow: 'hidden'}}
-      >
+              <a
+                key={item.name}
+                onClick={item.onClick}
+                href={item.href || undefined}
+                className={`nav-link relative px-2 py-1 cursor-pointer ${
+                  isScrolled ? 'text-black' : 'text-white'
+                } text-gray-700 transition-colors duration-200 hover:text-cyan-400 focus:text-cyan-400 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:rounded-full`}
+                style={{overflow: 'hidden'}}
+              >
                 {item.name}
                 {/* Animated underline */}
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-cyan-200 transition-all duration-300 group-hover:w-full rounded-full"></span>
@@ -80,9 +101,14 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <BorderAnimationButton text="Login" onClick={handleLogin } />
-            <BorderAnimationButton text="Sign Up" onClick={SignUpPage} />
-           
+            {token ? (
+              <ProfileDropdown />
+            ) : (
+              <>
+                <BorderAnimationButton text="Login" onClick={handleLogin } />
+                <BorderAnimationButton text="Sign Up" onClick={SignUpPage} />
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -98,30 +124,45 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-gray-200">
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a
                   key={item.name}
-                  href={item.href}
+                  href={item.href || undefined}
                   className="block py-2 text-muted-foreground hover:text-foreground transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={e => {
+                    if (item.onClick) {
+                      item.onClick();
+                      setIsMobileMenuOpen(false);
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   {item.name}
                 </a>
               ))}
               <div className="pt-4 space-y-2">
-                <BorderAnimationButton
-                  text="Login"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleLogin();
-                  }}
-                />
-
-                <BorderAnimationButton
-                  text = "Sign Up"/>
-                
+                {token ? (
+                  <ProfileDropdown />
+                ) : (
+                  <>
+                    <BorderAnimationButton
+                      text="Login"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        handleLogin();
+                      }}
+                    />
+                    <BorderAnimationButton
+                      text="Sign Up"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        SignUpPage();
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>

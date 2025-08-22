@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Lock, Mail, Zap } from 'lucide-react';
-
+import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { login } from "../services/operation/authAPI";
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -9,12 +11,46 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+     const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // Email validation function
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const [errors, setErrors] = useState({ email: '', password: '' });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    // Simulate loading
-    setTimeout(() => setIsLoading(false), 2000);
+    setErrors({ email: '', password: '' });
+
+    let isValid = true;
+
+    if (!formData.email) {
+      setErrors((prev) => ({ ...prev, email: 'Email is required' }));
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: 'Please enter a valid email' }));
+      isValid = false;
+    }
+
+    if (!formData.password) {
+      setErrors((prev) => ({ ...prev, password: 'Password is required' }));
+      isValid = false;
+    }
+
+    if (isValid) {
+      setIsLoading(true);
+      try {
+        // Dispatch Redux login action
+        await dispatch(login(formData.email, formData.password, navigate));
+      } catch (err) {
+        // handle any dispatch errors if necessary
+        console.error('Login failed:', err);
+      }
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -75,6 +111,9 @@ const LoginForm = () => {
                   className="w-full pl-11 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300"
                   placeholder="Enter your email"
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>
+                )}
                 <motion.div
                   className="absolute inset-0 rounded-xl border-2 border-cyan-500/50 opacity-0 pointer-events-none"
                   whileFocus={{ opacity: 1 }}
@@ -109,6 +148,9 @@ const LoginForm = () => {
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
+                {errors.password && (
+                  <span className="text-red-500 text-xs mt-1 block">{errors.password}</span>
+                )}
                 <motion.div
                   className="absolute inset-0 rounded-xl border-2 border-cyan-500/50 opacity-0 pointer-events-none"
                   whileFocus={{ opacity: 1 }}
