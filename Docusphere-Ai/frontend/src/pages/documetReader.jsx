@@ -1,56 +1,56 @@
 import { motion } from "framer-motion";
 import { FileText, Upload, Scan, Brain } from "lucide-react";
-import { useTheme } from "../hooks/usetheme";
-import { useState } from "react";
 
+// import { useState } from "react";
+import { AiInput } from "../components/ui/ai-input";
 export const DocumentReader = () => {
-  const { theme } = useTheme();
+ 
 
-  const [file, setFile] = useState(null);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [file, setFile] = useState(null);
+  // const [question, setQuestion] = useState("");
+  // const [answer, setAnswer] = useState("");
+  // const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (!file || !question) {
-      alert("⚠️ Please select a file and enter a question!");
-      return;
-    }
+  //   if (!file || !question) {
+  //     alert("⚠️ Please select a file and enter a question!");
+  //     return;
+  //   }
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("question", question);
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("question", question);
 
-    setLoading(true);
+  //   setLoading(true);
 
-    try {
-      const res = await fetch(
-        "https://email-ai-reply-production.up.railway.app/api/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+  //   try {
+  //     const res = await fetch(
+  //       "https://email-ai-reply-production.up.railway.app/api/upload",
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //       }
+  //     );
 
-      if (!res.ok) {
-        throw new Error("API error: " + res.status);
-      }
+  //     if (!res.ok) {
+  //       throw new Error("API error: " + res.status);
+  //     }
 
-      const data = await res.text();
-      setAnswer(data);
-    } catch (err) {
-      console.error("Error:", err);
-      alert("❌ Failed to connect to backend. Check API URL & CORS.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await res.text();
+  //     setAnswer(data);
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //     alert("❌ Failed to connect to backend. Check API URL & CORS.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const features = [
     {
@@ -75,7 +75,7 @@ export const DocumentReader = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col items-center justify-start bg-gray-950 text-gray-100 px-6 py-12"
+      className="min-h-screen flex flex-col items-center justify-start bg-black/50 text-gray-100 px-6 py-12"
     >
       {/* Header */}
       <motion.div
@@ -98,57 +98,10 @@ export const DocumentReader = () => {
         </p>
       </motion.div>
 
-      {/* Q&A Form */}
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="bg-gray-900 border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg mb-16"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center">📄 Ask your document</h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4
-                       file:rounded-lg file:border-0 file:text-sm file:font-semibold
-                       file:bg-gray-700 file:text-white hover:file:bg-gray-600"
-          />
-
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Enter your question..."
-            className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white outline-none focus:ring-2 focus:ring-gray-500"
-          />
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold transition disabled:opacity-50"
-          >
-            {loading ? "Processing..." : "Ask Question"}
-          </motion.button>
-        </form>
-
-        {answer && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-6 p-4 bg-gray-800 border border-gray-700 rounded-lg"
-          >
-            <h3 className="text-lg font-semibold mb-2">Answer:</h3>
-            <p className="text-gray-300">{answer}</p>
-          </motion.div>
-        )}
-      </motion.div>
+    
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-3 gap-6 mb-20 w-full max-w-5xl">
+      <div className="grid md:grid-cols-3 gap-6 mb-10 w-full max-w-5xl">
         {features.map((feature, index) => {
           const Icon = feature.icon;
           return (
@@ -171,9 +124,9 @@ export const DocumentReader = () => {
           );
         })}
       </div>
-
+<AiInput/>
       {/* Upload Area */}
-      <motion.div
+      {/* <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.7 }}
@@ -193,14 +146,9 @@ export const DocumentReader = () => {
           Soon, you’ll be able to upload and analyze documents with our advanced
           AI system.
         </p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-8 py-3 rounded-xl font-medium bg-gray-700 hover:bg-gray-600 text-white"
-        >
-          Coming Soon
-        </motion.button>
-      </motion.div>
+
+<AiInput/>
+      </motion.div> */}
     </motion.div>
   );
 };

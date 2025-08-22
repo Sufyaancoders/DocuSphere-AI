@@ -4,38 +4,72 @@ import { useTheme } from "../../hooks/usetheme";
 import { DocumentReader } from "../../pages/documetReader";
 import { AITalkingAgent } from "../../pages/AItaking";
 import { Zap, FileText, MessageSquare } from "lucide-react";
-
+import Hyperspeed from '../ui/hyperspeed';
 export const MainContent = ({ activeSection }) => {
   const { theme } = useTheme();
 
   const WelcomeScreen = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="h-full flex items-center justify-center p-8"
-    >
-      <div className="text-center max-w-2xl">
+    <div className="relative h-full flex items-center justify-center p-4">
+      {/* Hyperspeed BG */}
+      <div className="absolute inset-0 z-0">
+        <Hyperspeed
+          effectOptions={{
+            onSpeedUp: () => { },
+            onSlowDown: () => { },
+            distortion: 'turbulentDistortion',
+            length: 400,
+            roadWidth: 10,
+            islandWidth: 2,
+            lanesPerRoad: 4,
+            fov: 90,
+            fovSpeedUp: 120,
+            speedUp: 0.5, // reduced speed
+            carLightsFade: 0.4,
+            totalSideLightSticks: 20,
+            lightPairsPerRoadWay: 40,
+            shoulderLinesWidthPercentage: 0.05,
+            brokenLinesWidthPercentage: 0.1,
+            brokenLinesLengthPercentage: 0.5,
+            lightStickWidth: [0.12, 0.5],
+            lightStickHeight: [1.3, 1.7],
+            movingAwaySpeed: [20, 30], // reduced speed
+            movingCloserSpeed: [-40, -60], // reduced speed
+            carLightsLength: [400 * 0.03, 400 * 0.2],
+            carLightsRadius: [0.05, 0.14],
+            carWidthPercentage: [0.3, 0.5],
+            carShiftX: [-0.8, 0.8],
+            carFloorSeparation: [0, 5],
+            colors: {
+              roadColor: 0x080808,
+              islandColor: 0x0a0a0a,
+              background: 0x000000,
+              shoulderLines: 0xFFFFFF,
+              brokenLines: 0xFFFFFF,
+              leftCars: [0xD856BF, 0x6750A2, 0xC247AC],
+              rightCars: [0x03B3C3, 0x0E5EA5, 0x324555],
+              sticks: 0x03B3C3,
+            }
+          }}
+        />
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative z-10 text-center max-w-2xl mx-auto"
+      >
         {/* Logo Animation */}
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, type: "spring" }}
-          className="w-24 h-24 rounded-3xl mx-auto mb-8 flex items-center justify-center"
-          style={{ backgroundColor: theme.primary }}
-        >
-          <Zap size={40} color={theme.background} />
-        </motion.div>
+      
 
         {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-5xl font-bold mb-6"
+          className="text-6xl font-bold mb-6"
           style={{ color: theme.text }}
         >
-          Welcome to AI Dashboard
+          Welcome to <br />AI DocuSphere Dashboard
         </motion.h1>
 
         {/* Subtext */}
@@ -103,8 +137,8 @@ export const MainContent = ({ activeSection }) => {
             </p>
           </motion.div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 
   const renderContent = () => {
