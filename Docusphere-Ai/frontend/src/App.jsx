@@ -7,6 +7,7 @@ import About from './pages/About.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 // import Hero from './components/Hero'
 import Login from './pages/login';
+import ForgotPage from './pages/Forgetpage.jsx';
 import Home from './pages/homepage.jsx'
 import OpenRoute from './components/auth/OpenRoute'
 import VerifyEmail from './pages/VerifyEmail.jsx';
@@ -17,6 +18,7 @@ function App() {
     <>
       <div>
        <Routes>
+        <Route path="/forget-password" element={<ForgotPage />} />
         <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
        
