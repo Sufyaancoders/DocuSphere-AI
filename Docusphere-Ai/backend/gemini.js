@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require('axios');
 
 const geminiResponse = async (command,assistantName,userName)=>{
     try {
@@ -51,12 +51,19 @@ const geminiResponse = async (command,assistantName,userName)=>{
                 }
             ]
         })
-        return result.data.candidates[0].content.parts[0].text
+        if (!result || !result.data) {
+            console.error('Gemini API axios result is undefined or missing data:', result);
+            return undefined;
+        }
+        if (!result.data.candidates || !result.data.candidates[0] || !result.data.candidates[0].content || !result.data.candidates[0].content.parts || !result.data.candidates[0].content.parts[0] || !result.data.candidates[0].content.parts[0].text) {
+            console.error('Gemini API response structure unexpected:', result.data);
+            return undefined;
+        }
+        return result.data.candidates[0].content.parts[0].text;
     } catch (error) {
-        console.log(error);
-
-        
+        console.error('Gemini API axios error:', error);
+        return undefined;
     }
 }
 
-export default geminiResponse
+module.exports = geminiResponse

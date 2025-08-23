@@ -2,9 +2,211 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Mic, Volume2, Brain } from 'lucide-react';
 import { useTheme } from '../hooks/usetheme';
-
+import  {  useEffect, useRef, useState } from "react"
+import { getGeminiResponse } from '../services/operation/gemini';
+import { useSelector } from 'react-redux';
 export const AITalkingAgent = () => {
   const { theme } = useTheme();
+      const [listening, setListening] = useState(false)
+    const [aiText,setAiText] = useState("")
+    const [userText, setUserText] = useState("")
+    const isSpeakingRef = useRef(false)
+    const recognitionRef = useRef(null)
+    const isRecognizingRef = useRef(false)
+    const synth = window.speechSynthesis
+      const { signupData} = useSelector((state) => state.auth);
+
+//aitker
+    const handleCommand = async (data)=>{
+        const {response,type,userInput} = data
+        speak(response);
+
+        if(type === 'google_search'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.google.com/search?q=${query}`,'_blank');
+        }
+
+        if(type === 'youtube_search'|| type === 'youtube_play'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.youtube.com/results?search_query=${query}`,'_blank');
+        }
+
+        if(type === 'calculator_open'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.google.com/search?q=calculator`,'_blank');
+        }
+
+        if(type === 'instagram_open'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.instagram.com/`,'_blank');
+        }
+
+        if(type === 'facebook_open'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.facebook.com/`,'_blank');
+        }
+
+        if(type === 'weather_show'){
+            const query=encodeURIComponent(userInput)
+            window.open(`https://www.google.com/search?q=weather`,'_blank');
+        }
+
+    }
+  const startRecognization = ()=>{
+        if(!isSpeakingRef.current && !isRecognizingRef.current){
+            try {
+                recognitionRef.current?.start();
+                console.log("Recognition requested to start");
+                
+            } catch (error) {
+                if(error.name !== "InvalidStateError"){
+                    console.error("start error:", error);
+                    
+                }
+            }
+        }
+    }
+ const speak = (text)=>{
+        const uttrence = new SpeechSynthesisUtterance(text)
+        isSpeakingRef.current = true
+
+        uttrence.onend = ()=>{
+            setAiText("")
+            isSpeakingRef.current =false;
+            setTimeout(()=>{
+                startRecognization()
+            },800)
+            
+        }
+        synth.cancel()
+        synth.speak(uttrence)
+    }
+       useEffect(()=>{
+        const speechRecognition= window.SpeechRecognition || window.webkitSpeechRecognition
+
+        const recognition =new speechRecognition()
+
+        recognition.continuous = true;
+        recognition.lang ='en-US'
+        recognition.interimResults = false;
+
+        recognitionRef.current = recognition
+
+        let isMounted = true;
+
+        const startTimeout = setTimeout(()=>{
+            if(isMounted && !isSpeakingRef.current && !isRecognizingRef.current){
+                try {
+                    recognition.start();
+                    console.log("Recognition requested to start");
+                    
+                } catch (error) {
+                    if(error.name !== "InvalidStateError"){
+                        console.error(error);
+                        
+                    }
+                }
+            }
+        },1000);
+
+       recognition.onstart= ()=>{
+            console.log("Recognition started");
+            isRecognizingRef.current = true;
+            setListening(true);
+       }
+
+
+       recognition.onend= ()=>{
+            console.log("Recognition ended");
+            isRecognizingRef.current = false;
+            setListening(false);
+
+            if(isMounted && !isSpeakingRef.current ){
+                setTimeout(() => {
+                    if(isMounted){
+                        try {
+                            recognition.start();
+                            console.log("Recognition restarted");
+                            
+                        } catch (error) {
+                            if(error.name !== "InvalidStateError") console.error(error);
+                            
+                        }
+                    }
+                }, 3000);
+            }
+       }
+
+
+       recognition.onerror= (event)=>{
+            console.warn("Recognition error:", event.error);
+            isRecognizingRef.current = false;
+            setListening(false);
+
+            if(event.error !== "aborted" && isMounted && !isSpeakingRef.current ){
+                setTimeout(() => {
+                    if (isMounted) {
+                        try {
+                            recognition.start();
+                            console.log("Recognition restarted after error");
+                            
+                        } catch (error) {
+                            if(error.name !== "InvalidStateError") console.error(error);
+                            
+                        }
+                    }
+                }, 3000);
+            }
+       }
+
+
+        recognition.onresult=async (e)=>{
+          
+          const transcript = e.results[e.results.length-1][0].transcript.trim();
+          console.log("Heard : ", transcript);
+          try {
+            // Ignore transcript if it is just "hey" or starts with "hey"
+            if (
+              transcript.toLowerCase() === "hey" ||
+              transcript.toLowerCase().startsWith("hey ")
+            ) {
+              // Do nothing, skip processing "hey"
+              return;
+            }
+            setAiText("");
+            setUserText(transcript);
+            recognition.stop();
+            isRecognizingRef.current = false;
+            setListening(false);
+
+            if (!transcript) {
+              console.warn("Transcript is empty, not sending request.");
+              return;
+            }
+            console.log("Sending to Gemini API:", { command: transcript });
+            const data = await getGeminiResponse(transcript);
+            console.log("Gemini response:", data);
+            handleCommand(data);
+            setAiText(data.response);
+            setUserText("");
+          } catch (error) {
+            console.log("Gemini error:", error);
+          }
+        }
+
+        const greeting = new SpeechSynthesisUtterance(`Hello ${signupData?.name}, What can I help you with?`);
+        window.speechSynthesis.speak(greeting)
+
+        return ()=>{
+            isMounted = false;
+            clearTimeout(startTimeout);
+            recognition.stop()
+            setListening(false)
+            isRecognizingRef.current = false
+        }
+        
+    },[])
+
 
   const capabilities = [
     {
@@ -144,22 +346,18 @@ export const AITalkingAgent = () => {
 
         {/* Chat Messages */}
         <div className="p-6 space-y-4 min-h-[300px] flex flex-col justify-center">
-          <div className="text-center">
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
-              style={{ backgroundColor: theme.primary }}
-            >
-              <MessageSquare size={24} color={theme.background} />
-            </motion.div>
-            <h3 className="text-xl font-semibold mb-2" style={{ color: theme.text }}>
-              AI Agent Coming Soon
-            </h3>
-            <p className="text-sm max-w-md mx-auto mb-6" style={{ color: theme.textSecondary }}>
-              We're building an advanced conversational AI that will understand context,
-              remember conversations, and provide intelligent responses.
-            </p>
+          <div className="text-center"><div>
+            <h2 className="w-full flex flex-wrap flex-col items-center justify-center mb-2 mt-2 pb-2">
+              <span className="flex flex-wrap items-center justify-center gap-3 text-3xl font-extrabold text-center">
+                <span className="inline-block animate-bounce text-4xl">🤖</span>
+                <span className="flex flex-wrap justify-center">
+                  <span className="rounded-xl text-white">Hi... I'm</span>
+                  <span className="ml-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-black">AI DOCUSPHERE</span>
+                            </span>
+                        </span>
+                    </h2>
+                    <h1 className=" text-amber-50 text-wrap ">{userText?userText:aiText?aiText:null}</h1>
+                    </div>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

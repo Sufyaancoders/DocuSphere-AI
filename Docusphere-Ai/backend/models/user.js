@@ -31,8 +31,14 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpiry: {
     type: Date,
     default: undefined
-  }
-});
+  },
+  history: [
+    { type: String,
+  
+     }
+  ]
+
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
 
