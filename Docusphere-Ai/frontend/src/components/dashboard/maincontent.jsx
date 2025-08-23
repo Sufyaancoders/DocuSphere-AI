@@ -5,6 +5,7 @@ import { DocumentReader } from "../../pages/documetReader";
 import { AITalkingAgent } from "../../pages/AItaking";
 import { Zap, FileText, MessageSquare } from "lucide-react";
 import Hyperspeed from '../ui/hyperspeed';
+import { TextAnimate } from "../ui/text";
 export const MainContent = ({ activeSection }) => {
   const { theme } = useTheme();
 
@@ -67,9 +68,10 @@ export const MainContent = ({ activeSection }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="text-6xl font-bold mb-6"
-          style={{ color: theme.text }}
-        >
-          Welcome to <br />"AI DocuSphere" Dashboard
+          style={{ color: "white" }}
+        ><TextAnimate animation="blurInUp" by="word" once>
+          Welcome to "AIDocuSphere" Dashboard
+        </TextAnimate>
         </motion.h1>
 
         {/* Subtext */}

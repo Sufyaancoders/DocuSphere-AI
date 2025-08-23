@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FileText, Upload, Scan, Brain } from "lucide-react";
-
+import  {TextAnimate }from "../components/ui/text";
 // import { useState } from "react";
 import { AiInput } from "../components/ui/ai-input";
 export const DocumentReader = () => {
@@ -84,14 +84,16 @@ export const DocumentReader = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center mb-16"
       >
-        <motion.div
+        {/* <motion.div
           animate={{ rotate: [0, 5, -5, 0] }}
           transition={{ repeat: Infinity, duration: 4 }}
           className="w-20 h-20 rounded-2xl mx-auto mb-6 flex items-center justify-center bg-gray-800"
         >
           <FileText size={32} color="white" />
-        </motion.div>
-        <h1 className="text-4xl font-bold mb-4 text-white">Document Reader</h1>
+        </motion.div> */}
+
+  <TextAnimate animation="blurInUp" by="character" once className="text-6xl font-bold mb-6">Document Reader</TextAnimate>
+
         <p className="text-lg max-w-2xl mx-auto text-gray-400">
           Upload your documents and let AI extract insights, summaries, and key
           information instantly.
