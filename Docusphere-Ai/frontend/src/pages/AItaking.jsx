@@ -5,6 +5,7 @@ import { useTheme } from '../hooks/usetheme';
 import  {  useEffect, useRef, useState } from "react"
 import { getGeminiResponse } from '../services/operation/gemini';
 import { useSelector } from 'react-redux';
+import WavyBackground from '../components/ui/wave';
 export const AITalkingAgent = () => {
   const { theme } = useTheme();
       const [listening, setListening] = useState(false)
@@ -266,20 +267,12 @@ So whenever you ask.`;
     >
       {/* Header */}
       <div className="text-center mb-12">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring' }}
-          className="w-20 h-20 rounded-2xl mx-auto mb-6 flex items-center justify-center"
-          style={{ backgroundColor: theme.primary }}
-        >
-          <MessageSquare size={32} color={theme.background} />
-        </motion.div>
+       
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-4xl font-bold mb-4"
+          className="text-6xl font-bold mb-4"
           style={{ color: theme.text }}
         >
           AI Talking Agent
@@ -349,7 +342,7 @@ So whenever you ask.`;
           <div className="flex items-center gap-4">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ backgroundColor: theme.primary }}
+              style={{ backgroundColor: "white" }}
             >
               <Brain size={20} color={theme.background} />
             </div>
@@ -360,7 +353,7 @@ So whenever you ask.`;
               <div className="flex items-center gap-2">
                 <div
                   className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: theme.accent }}
+                  style={{ backgroundColor: "red" }}
                 />
                 <span className="text-xs" style={{ color: theme.textSecondary }}>
                   Ready to chat
@@ -371,32 +364,28 @@ So whenever you ask.`;
         </div>
 
         {/* Chat Messages */}
+         <WavyBackground>
         <div className="p-6 space-y-4 min-h-[300px] flex flex-col justify-center">
-          <div className="text-center"><div>
-            <h2 className="w-full flex flex-wrap flex-col items-center justify-center mb-2 mt-2 pb-2">
-              <span className="flex flex-wrap items-center justify-center gap-3 text-3xl font-extrabold text-center">
-                <span className="inline-block animate-bounce text-4xl">🤖</span>
+        
+          <div className="text-center">
+            
+              <div>
+                <h2 className="w-full flex flex-wrap flex-col items-center justify-center mb-2 mt-2 pb-2">
+                  <span className="flex flex-wrap items-center justify-center gap-3 text-3xl font-extrabold text-center">
+                    <span className="inline-block animate-bounce text-4xl">🤖</span>
                 <span className="flex flex-wrap justify-center">
                   <span className="rounded-xl text-white">Hi... I'm</span>
-                  <span className="ml-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-black">AI DOCUSPHERE</span>
+                  <span className="ml-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-black font-black">AI DOCUSPHERE</span>
                             </span>
                         </span>
                     </h2>
                     <h1 className=" text-amber-50 text-wrap ">{userText?userText:aiText?aiText:null}</h1>
-                    </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 rounded-xl font-medium transition-colors"
-              style={{
-                backgroundColor: theme.primary,
-                color: theme.background,
-              }}
-            >
-              Start Conversation (Coming Soon)
-            </motion.button>
+                   </div>
+         
           </div>
+          
         </div>
+        </WavyBackground>
       </motion.div>
     </motion.div>
   );
