@@ -69,7 +69,7 @@ export const MainContent = ({ activeSection }) => {
           className="text-6xl font-bold mb-6"
           style={{ color: theme.text }}
         >
-          Welcome to <br />AI DocuSphere Dashboard
+          Welcome to <br />"AI DocuSphere" Dashboard
         </motion.h1>
 
         {/* Subtext */}

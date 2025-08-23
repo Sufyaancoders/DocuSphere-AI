@@ -75,7 +75,7 @@ export const DocumentReader = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col items-center justify-start bg-black/50 text-gray-100 px-6 py-12"
+      className="min-h-screen flex flex-col items-center justify-start bg-black/60 text-gray-100 px-6 py-12"
     >
       {/* Header */}
       <motion.div
@@ -111,7 +111,7 @@ export const DocumentReader = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + index * 0.1 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="p-6 rounded-2xl bg-gray-900 border border-gray-800 shadow-lg"
+              className="p-6 rounded-2xl bg-gray-900 border bg-opacity-5 border-gray-800 shadow-lg"
             >
               <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center bg-gray-700">
                 <Icon size={20} color="white" />

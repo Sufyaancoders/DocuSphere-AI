@@ -8,11 +8,6 @@ import TextGenerateEffect from "./TextGenerateEffect"
 import { cn } from "../../lib/utils"
 
 
-
-
-
-
-
 const MAX_HEIGHT = 164
 
 // Duplicate AnimatedPlaceholder removed
@@ -116,8 +111,8 @@ export function AiInput() {
         </div>
       )}
 </div>
-  <div className="relative max-w-xl mb-8 w-full mx-auto group transition-all duration-200    rounded-[22px] p-1 hover:border-2 hover:shadow-[0_0_0_3px_rgba(255,63,23,0.15)] focus-within:border-2 focus-within:shadow-[0_0_0_3px_rgba(255,63,23,0.18)]">
-        <div className="relative rounded-2xl  bg-neutral-800/5 flex flex-col">
+  <div className="relative max-w-xl my-8 w-full mx-auto group transition-all duration-200    rounded-[24px] p-1  focus-within:shadow-[0_0_0_3px_rgba(255,63,23,0.18)]">
+        <div className="relative rounded-2xl  bg-black/5 flex flex-col">
           <div
             className="overflow-y-auto"
             style={{ maxHeight: `${MAX_HEIGHT}px` }}
