@@ -183,6 +183,32 @@ export const AITalkingAgent = () => {
               console.warn("Transcript is empty, not sending request.");
               return;
             }
+
+            // Intercept "what is docusphere" questions and reply directly
+            if (
+              /what\s+is\s+docusphere/i.test(transcript) ||
+              /who\s+are\s+you/i.test(transcript) ||
+              /about\s+docusphere/i.test(transcript)
+            ) {
+              console.log("Custom DocuSphere response triggered for:", transcript);
+              const docuSphereMsg = `I am DocuSphere AI, an intelligent assistant created with passion and vision by Sufyaan and Rehaan. Together, they built the platform AI dashboard, a space where artificial intelligence becomes a true companion for everyone.
+
+This platform is more than just a single tool — it is a dashboard of AI, you can explore everything here: ask questions, get clear answers, summarize documents, organize data, and even have natural conversations with AI.
+
+My purpose is simple: to make your work easier, faster, and smarter. Whether you’re a student, a professional, or simply curious.
+
+Sufyaan and Rehaan created this platform with the belief that AI should not be complicated or limited. Their mission is to build an environment where technology feels friendly, reliable, and accessible to everyone.
+
+So whenever you ask.`;
+              setUserText(transcript);
+              setAiText(docuSphereMsg);
+              speak(docuSphereMsg);
+              recognition.stop();
+              isRecognizingRef.current = false;
+              setListening(false);
+              return;
+            }
+
             console.log("Sending to Gemini API:", { command: transcript });
             const data = await getGeminiResponse(transcript);
             console.log("Gemini response:", data);
