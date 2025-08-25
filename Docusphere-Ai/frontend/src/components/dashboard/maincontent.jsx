@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 import { useTheme } from "../../hooks/usetheme";
 import { DocumentReader } from "../../pages/documetReader";
 import { AITalkingAgent } from "../../pages/AItaking";
-import { Zap, FileText, MessageSquare } from "lucide-react";
+import { Zap, FileText, MessageSquare, Image as ImageIcon } from "lucide-react";
 import Hyperspeed from '../ui/hyperspeed';
 import { TextAnimate } from "../ui/text";
+import { AIImageGenerator } from "../../pages/AIImageGenerator.jsx";
 export const MainContent = ({ activeSection }) => {
   const { theme } = useTheme();
 
@@ -86,7 +87,7 @@ export const MainContent = ({ activeSection }) => {
         </motion.p>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {/* Document Reader Card */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -138,6 +139,32 @@ export const MainContent = ({ activeSection }) => {
               Natural conversations with voice-enabled AI interactions
             </p>
           </motion.div>
+
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            whileHover={{ scale: 1.05, y: -4 }}
+            className="p-8 rounded-2xl border backdrop-blur-sm"
+            style={{
+              backgroundColor: `${theme.surface}80`,
+              borderColor: theme.border,
+            }}
+          >
+            <div
+              className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center mx-auto"
+              style={{ backgroundColor: theme.accent }}
+            >
+              <ImageIcon size={24} color={theme.background} />
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-center" style={{ color: theme.text }}>
+              AI Image Generator
+            </h3>
+            <p className="text-sm text-center" style={{ color: theme.textSecondary }}>
+              Create stunning AI-generated images from text descriptions
+            </p>
+          </motion.div>
         </div>
       </motion.div>
     </div>
@@ -149,6 +176,8 @@ export const MainContent = ({ activeSection }) => {
         return <DocumentReader />;
       case "ai-talking-agent":
         return <AITalkingAgent />;
+          case 'ai-image-generator':
+        return <AIImageGenerator />;
       default:
         return <WelcomeScreen />;
     }

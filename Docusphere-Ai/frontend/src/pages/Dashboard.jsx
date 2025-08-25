@@ -86,7 +86,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <motion.main
-        className="flex-1 flex flex-col"
+        className="flex-1 flex flex-col min-h-screen"
         style={{
           marginLeft: isMobile ? 0 : '18rem',
         }}

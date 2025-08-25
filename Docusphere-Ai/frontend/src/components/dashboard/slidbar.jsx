@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, MessageSquare, Zap } from "lucide-react";
+import { FileText, MessageSquare, Zap ,Image} from "lucide-react";
 import { useTheme } from "../../hooks/usetheme";
 import { ProfileDropdown } from "./profileDropbox";
 import { ThemeSwitcher } from "./themeSwitcher";
@@ -20,6 +20,12 @@ export const Sidebar = ({ activeSection, onSectionChange, isMobile, isOpen }) =>
       label: "AI Talking Agent",
       icon: MessageSquare,
       description: "Interactive AI conversations",
+    },
+     {
+      id: 'ai-image-generator',
+      label: 'AI Image Generator',
+      icon: Image,
+      description: 'Create stunning AI-generated images',
     },
   ];
 

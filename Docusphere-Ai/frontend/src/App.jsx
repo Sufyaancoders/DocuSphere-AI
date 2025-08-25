@@ -13,6 +13,7 @@ import OpenRoute from './components/auth/OpenRoute'
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PrivateRoute from './components/auth/PrivateRoute'
+import { AIImageGenerator } from './pages/AIImageGenerator.jsx';
 function App() {
   return (
     <>
@@ -47,6 +48,7 @@ function App() {
         />
 
       
+       <Route path="/AIImageGenerator" element={<AIImageGenerator />} />
        </Routes>
       </div>
     </>

@@ -238,7 +238,7 @@ const TextAnimateBase = (props) => {
   const {
     children,
     delay = 0,
-    duration = 0.3,
+    duration = 0.9,
     variants,
     className,
     segmentClassName,
