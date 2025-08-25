@@ -98,8 +98,8 @@ export const AIImageGenerator = () => {
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center mx-auto"
-                style={{ backgroundColor: theme.accent }}
+                className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center mx-auto gray-900"
+                style={{ backgroundColor: "gray" }}
               >
                 <Icon size={20} color={theme.background} />
               </div>
@@ -130,7 +130,7 @@ export const AIImageGenerator = () => {
           <div className="flex items-center gap-4">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ backgroundColor: theme.primary }}
+              style={{ backgroundColor:"white" }}
             >
               <Sparkles size={20} color={theme.background} />
             </div>
@@ -141,7 +141,7 @@ export const AIImageGenerator = () => {
               <div className="flex items-center gap-2">
                 <div
                   className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: theme.accent }}
+                  style={{ backgroundColor: "red" }}
                 />
                 <span className="text-xs" style={{ color: theme.textSecondary }}>
                   AI Engine Ready
@@ -163,16 +163,17 @@ export const AIImageGenerator = () => {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="A futuristic cityscape at sunset with flying cars and neon lights..."
-                className="w-full h-32 p-4 rounded-xl border resize-none transition-all duration-300 focus:outline-none focus:ring-2"
+                className="w-full h-25 p-2 rounded-xl border resize-none transition-all duration-300 focus:outline-none focus:ring-2"
                 style={{
-                  backgroundColor: theme.background,
+                  backgroundColor: "gray",
                   borderColor: theme.border,
-                  color: theme.text,
+                  color: "black",
                   focusRingColor: theme.accent,
+                  fontWeight: "normal",
                 }}
               />
               <div className="absolute bottom-4 right-4 text-xs" style={{ color: theme.textSecondary }}>
-                {prompt.length}/500
+                {prompt.length}/100
               </div>
             </div>
           </div>

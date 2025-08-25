@@ -4,7 +4,7 @@ import { FileText, MessageSquare, Zap ,Image} from "lucide-react";
 import { useTheme } from "../../hooks/usetheme";
 import { ProfileDropdown } from "./profileDropbox";
 import { ThemeSwitcher } from "./themeSwitcher";
-
+import { SparklesText } from "../ui/SparklesText"
 export const Sidebar = ({ activeSection, onSectionChange, isMobile, isOpen }) => {
   const { theme } = useTheme();
 
@@ -53,7 +53,7 @@ export const Sidebar = ({ activeSection, onSectionChange, isMobile, isOpen }) =>
           </motion.div>
           <div>
             <h1 className="text-xl font-bold" style={{ color: theme.text }}>
-              AI DocuSphere
+             <SparklesText > AI DocuSphere</SparklesText>
             </h1>
             <p className="text-xs" style={{ color: theme.textSecondary }}>
               AI Intelligence Hub
