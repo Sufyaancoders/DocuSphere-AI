@@ -7,5 +7,6 @@ export const authEndpoints = {
     SENDOTP_API: `${BASE_URL}/send-otp`,
     RESETPASSTOKEN_API: `${BASE_URL}/reset-password-token`,
     RESETPASSWORD_API: `${BASE_URL}/reset-password`,
-    ASKTOASSISTANT_API: `${BASE_URL}/gemini/ask-to-assistant`
+    ASKTOASSISTANT_API: `${BASE_URL}/gemini/ask-to-assistant`,
+    GENERATEIMAGE_API: `${BASE_URL}/gemini/generate-image`
 };

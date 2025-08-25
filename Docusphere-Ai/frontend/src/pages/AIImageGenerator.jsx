@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { Image, Wand2, Download, Sparkles, Palette, Settings } from 'lucide-react';
 import { useTheme } from '../hooks/usetheme';
 import  {TextAnimate }from "../components/ui/text";
+import { generateImage } from '../services/operation/gemini';
 export const AIImageGenerator = () => {
   const { theme } = useTheme();
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [imageBase64, setImageBase64] = useState('');
 
   const features = [
     {
@@ -40,14 +42,21 @@ export const AIImageGenerator = () => {
     { name: 'Abstract', color: '#DDA0DD' },
   ];
 
-  const handleGenerate = () => {
-    if (!prompt.trim()) return;
-    setIsGenerating(true);
-    // Simulate generation process
-    setTimeout(() => {
-      setIsGenerating(false);
-    }, 3000);
-  };
+
+  
+ const handleGenerate = async () => {
+  if (!prompt.trim()) return;
+  setIsGenerating(true);
+  try {
+    const image = await generateImage(prompt);
+    setImageBase64(image); // set the base64 string
+  } catch (e) {
+    setImageBase64('');
+    // Optionally, show error to user
+  } finally {
+    setIsGenerating(false);
+  }
+};
 
   return (
     <motion.div
@@ -208,6 +217,7 @@ export const AIImageGenerator = () => {
             </div>
           </div>
 
+
           {/* Generate Button */}
           <div className="text-center">
             <motion.button
@@ -217,8 +227,8 @@ export const AIImageGenerator = () => {
               disabled={!prompt.trim() || isGenerating}
               className="px-12 py-4 rounded-xl font-semibold text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
-                backgroundColor: theme.primary,
-                color: theme.background,
+                backgroundColor:"white",
+                color: "black",
               }}
             >
               {isGenerating ? (
@@ -240,6 +250,27 @@ export const AIImageGenerator = () => {
             </motion.button>
           </div>
 
+          {/* Show generated image if available */}
+          {imageBase64 && (
+            <div className="mt-8 text-center">
+              <img
+                src={`data:image/png;base64,${imageBase64}`}
+                alt="Generated"
+                className="mx-auto rounded-xl shadow-lg max-w-full"
+                style={{ maxHeight: 400 }}
+              />
+              <a
+                href={`data:image/png;base64,${imageBase64}`}
+                download="generated-image.png"
+                className="inline-flex items-center gap-2 mt-4 px-6 py-2 rounded-lg bg-blue-400 text-black font-semibold shadow hover:bg-blue-500 transition-colors duration-200"
+                style={{ textDecoration: "none" }}
+              >
+                <Download size={18} />
+                Download Image
+              </a>
+            </div>
+          )}
+
           {/* Coming Soon Notice */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -251,9 +282,11 @@ export const AIImageGenerator = () => {
               borderColor: theme.border,
             }}
           >
-            <h4 className="text-lg font-semibold mb-2" style={{ color: theme.text }}>
-              AI Image Generation Coming Soon
-            </h4>
+            {!imageBase64 && (
+              <h4 className="text-lg font-semibold mb-2" style={{ color: theme.text }}>
+                AI Image Generation Coming Soon
+              </h4>
+            )}
             <p className="text-sm" style={{ color: theme.textSecondary }}>
               We're building an advanced AI image generation system that will create
               stunning visuals from your text descriptions. Stay tuned for this exciting feature!
