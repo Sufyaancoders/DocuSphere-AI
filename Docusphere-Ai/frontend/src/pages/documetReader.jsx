@@ -103,7 +103,7 @@ export const DocumentReader = () => {
     
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-3 gap-6 mb-10 w-full max-w-5xl">
+      <div className="grid md:grid-cols-3 gap-6 mb-10 w-full max-w-6xl">
         {features.map((feature, index) => {
           const Icon = feature.icon;
           return (
