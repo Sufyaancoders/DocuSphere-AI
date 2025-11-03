@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "cd Docusphere-Ai/frontend && npm ci && npm run build",
+  "outputDirectory": "Docusphere-Ai/frontend/dist",
+  "installCommand": "npm install --include=optional",
+  "framework": null,
+  "build": {
+    "env": {
+      "NPM_FLAGS": "--legacy-peer-deps"
+    }
+  }
+}
