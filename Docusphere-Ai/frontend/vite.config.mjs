@@ -29,6 +29,10 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     // Enable minification with esbuild (faster and no extra dependency needed)
     minify: 'esbuild',
+    // Target modern browsers for better compatibility
+    target: 'es2020',
+    // Optimize sourcemaps for production
+    sourcemap: false,
   },
   // Optimize dependencies
   optimizeDeps: {
