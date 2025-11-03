@@ -1,16 +1,14 @@
 {
-  "buildCommand": "cd Docusphere-Ai/frontend && npm install --legacy-peer-deps && npm run build",
+  "buildCommand": "cd Docusphere-Ai/frontend && npm ci --legacy-peer-deps && npm run build",
   "outputDirectory": "Docusphere-Ai/frontend/dist",
-  "installCommand": "cd Docusphere-Ai/frontend && npm install --legacy-peer-deps --include=dev",
+  "installCommand": "cd Docusphere-Ai/frontend && npm ci --legacy-peer-deps",
   "framework": "vite",
   "env": {
-    "NODE_VERSION": "20.x"
+    "NODE_VERSION": "18.x"
   },
   "build": {
     "env": {
-      "NODE_ENV": "production",
-      "NPM_CONFIG_PRODUCTION": "false",
-      "VITE_CJS_IGNORE_WARNING": "true"
+      "NODE_ENV": "production"
     }
   },
   "rewrites": [

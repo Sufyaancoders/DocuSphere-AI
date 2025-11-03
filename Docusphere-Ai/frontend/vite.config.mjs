@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -14,37 +14,24 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-    },
-  },
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+    target: 'es2015',
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
-        manualChunks: undefined, // Disable manual chunking to avoid Rollup issues
+        manualChunks: undefined,
       },
     },
-    // Increase chunk size warning limit to avoid warnings for intentional large chunks
-    chunkSizeWarningLimit: 1500,
-    // Enable minification with esbuild (faster and no extra dependency needed)
-    minify: 'esbuild',
-    // Target modern browsers for better compatibility
-    target: 'esnext',
-    // Optimize sourcemaps for production
-    sourcemap: false,
-    // Ensure commonjs dependencies work correctly
-    commonjsOptions: {
-      transformMixedEsModules: true,
-      include: [/node_modules/],
-    },
+  },
+  server: {
+    port: 3000,
+  },
+  preview: {
+    port: 3000,
   },
 })
 
