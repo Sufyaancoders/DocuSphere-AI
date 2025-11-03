@@ -14,45 +14,36 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.jsx?$/,
+    exclude: [],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split vendor chunks
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
-          'ui-vendor': ['framer-motion', 'lucide-react'],
-          'animation-vendor': ['gsap', 'three', 'motion', 'motion-v'],
-          'chart-vendor': ['chart.js'],
-          'utils-vendor': ['axios', 'moment', 'clsx', 'tailwind-merge'],
-        },
+        manualChunks: undefined, // Disable manual chunking to avoid Rollup issues
       },
     },
     // Increase chunk size warning limit to avoid warnings for intentional large chunks
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     // Enable minification with esbuild (faster and no extra dependency needed)
     minify: 'esbuild',
     // Target modern browsers for better compatibility
-    target: 'es2020',
+    target: 'esnext',
     // Optimize sourcemaps for production
     sourcemap: false,
     // Ensure commonjs dependencies work correctly
     commonjsOptions: {
       transformMixedEsModules: true,
-    },
-  },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      '@reduxjs/toolkit',
-      'react-redux',
-      'axios',
-    ],
-    esbuildOptions: {
-      target: 'es2020',
+      include: [/node_modules/],
     },
   },
 })

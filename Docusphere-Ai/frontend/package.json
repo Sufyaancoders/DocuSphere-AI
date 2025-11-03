@@ -11,7 +11,8 @@
     "server": "cd ../backend && npm run dev",
     "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm start\" \"npm run server\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "node -e \"console.log('Dependencies installed successfully')\""
   },
   "dependencies": {
     "@alloc/quick-lru": "^5.2.0",
@@ -47,7 +48,8 @@
     "tailwindcss": "^4.1.12",
     "three": "^0.179.1",
     "tw-animate-css": "^1.3.6",
-    "vite": "^5.4.11"
+    "vite": "^5.0.13",
+    "rollup": "^4.9.6"
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
