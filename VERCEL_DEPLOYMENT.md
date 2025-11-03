@@ -22,10 +22,19 @@ DocuSphere-AI/
 2. Click "Add New Project"
 3. Import your GitHub repository: `Sufyaancoders/DocuSphere-AI`
 4. Configure the project settings:
+
+   **Option A - Build from Root (using vercel.json):**
    - **Framework Preset**: Other
-   - **Root Directory**: Leave as `.` (root)
-   - **Build Command**: Will be read from `vercel.json`
-   - **Output Directory**: Will be read from `vercel.json`
+   - **Root Directory**: `.` (root)
+   - **Build Command**: Leave empty (will use vercel.json)
+   - **Output Directory**: `Docusphere-Ai/frontend/dist`
+
+   **Option B - Build from Frontend Directory (Recommended):**
+   - **Framework Preset**: Vite
+   - **Root Directory**: `Docusphere-Ai/frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm ci`
 
 ### 2. Environment Variables (if needed)
 
