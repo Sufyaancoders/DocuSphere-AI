@@ -113,11 +113,13 @@
 
 @layer base {
   * {
-    @apply border-gray-300;
+    border-color: rgb(209 213 219);
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 }
@@ -125,10 +127,19 @@
 @layer components {
   /* Hero Button with Gradient */
   .btn-hero {
-    @apply relative px-8 py-4 rounded-lg font-semibold text-primary-foreground;
-    @apply transition-all duration-300 transform hover:scale-105;
+    position: relative;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: hsl(var(--primary-foreground));
+    transition: all 0.3s;
+    transform: scale(1);
     background: var(--gradient-primary);
     box-shadow: var(--glow-primary);
+  }
+  
+  .btn-hero:hover {
+    transform: scale(1.05);
   }
 
   .btn-hero:hover {
@@ -142,9 +153,16 @@
 
   /* Card with Glow Effect */
   .card-glow {
-    @apply bg-card border border-border rounded-lg p-6;
-    @apply transition-all duration-300 hover:border-primary/50;
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: all 0.3s;
     box-shadow: 0 4px 20px hsl(220 13% 5% / 0.3);
+  }
+  
+  .card-glow:hover {
+    border-color: hsl(var(--primary) / 0.5);
   }
 
   .card-glow:hover {
@@ -298,8 +316,14 @@
 
   /* Navigation Hover Effects */
   .nav-link {
-    @apply relative px-4 py-2 text-muted-foreground transition-colors duration-300;
-    @apply hover:text-foreground;
+    position: relative;
+    padding: 0.5rem 1rem;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s;
+  }
+  
+  .nav-link:hover {
+    color: hsl(var(--foreground));
   }
 
   .nav-link::after {
@@ -320,10 +344,19 @@
 
   /* Feature Icon Glow */
   .feature-icon {
-    @apply w-16 h-16 rounded-xl flex items-center justify-center;
-    @apply transition-all duration-300 hover:scale-110;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
     background: var(--gradient-dark);
     border: 1px solid hsl(220 13% 18%);
+  }
+  
+  .feature-icon:hover {
+    transform: scale(1.1);
   }
 
   .feature-icon:hover {
@@ -347,8 +380,6 @@
     animation: fadeInUp 0.6s ease-out forwards;
   }
 }
-@tailwind utilities;
-
 
 ::-webkit-scrollbar {
   width: 6px;

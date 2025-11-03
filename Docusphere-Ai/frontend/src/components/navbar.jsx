@@ -124,7 +124,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-gray-200">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-[hsl(220_13%_5%/0.95)] backdrop-blur-xl border-b border-gray-200">
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a

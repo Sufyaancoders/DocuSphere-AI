@@ -155,7 +155,7 @@ console.log(result.insights);`;
             
             <BorderAnimationButton
               variant="outline" 
-              className="bg-background/20 border-gray-200 hover:bg-background/30 backdrop-blur-sm"
+              className="bg-[hsl(220_13%_5%/0.2)] border-gray-200 hover:bg-[hsl(220_13%_5%/0.3)] backdrop-blur-sm"
             >
               Try in Playground
             </BorderAnimationButton>
