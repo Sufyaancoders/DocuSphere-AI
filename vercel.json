@@ -1,9 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "cd Docusphere-Ai/frontend && npm ci && npm run build",
-  "outputDirectory": "Docusphere-Ai/frontend/dist",
-  "installCommand": "npm install",
-  "framework": null,
   "rewrites": [
     {
       "source": "/(.*)",
