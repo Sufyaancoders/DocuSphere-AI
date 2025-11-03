@@ -18,12 +18,15 @@ if exist package-lock.json (
 echo.
 
 echo Step 2: Installing dependencies...
-call npm install
+call npm install --legacy-peer-deps
 if %errorlevel% neq 0 (
     echo ERROR: npm install failed!
     pause
     exit /b 1
 )
+echo.
+echo Installed packages:
+call npm list --depth=0 | find /c "├──"
 echo.
 
 echo Step 3: Building the project...
