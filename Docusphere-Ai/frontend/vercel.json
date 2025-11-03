@@ -13,11 +13,6 @@
       "VITE_CJS_IGNORE_WARNING": "true"
     }
   },
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/(.*)",
