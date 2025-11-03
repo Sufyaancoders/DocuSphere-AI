@@ -2,6 +2,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -33,6 +36,10 @@ export default defineConfig({
     target: 'es2020',
     // Optimize sourcemaps for production
     sourcemap: false,
+    // Ensure commonjs dependencies work correctly
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
   // Optimize dependencies
   optimizeDeps: {
@@ -44,6 +51,9 @@ export default defineConfig({
       'react-redux',
       'axios',
     ],
+    esbuildOptions: {
+      target: 'es2020',
+    },
   },
 })
 
