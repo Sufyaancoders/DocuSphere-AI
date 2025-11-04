@@ -273,7 +273,7 @@ const SignUpPage = () => {
   return (
     <div style={styles.container}>
       {/* CSS Keyframes */}
-      <style jsx>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
         
         @keyframes fadeIn {
