@@ -5,12 +5,15 @@ require('dotenv').config();
 // Create a single reusable transporter
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587, 
-    secure: false,
+    port: 465, 
+    secure: true, // Use SSL
     auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
     },
+    tls: {
+        rejectUnauthorized: false // For compatibility with some environments
+    }
 });
 
 // Track recent emails using a more specific key to prevent template confusion

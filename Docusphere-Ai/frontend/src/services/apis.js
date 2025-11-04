@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:5001/api/v1"
+// const BASE_URL = "http://localhost:5001/api/v1"
+const BASE_URL = "https://docusphere-ai.onrender.com/api/v1"
 
 export const authEndpoints = {
     LOGIN_API: `${BASE_URL}/login`,
