@@ -13,6 +13,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'http://localhost:3000',
     'https://your-frontend-domain.vercel.app', // Add your Vercel domain
     'https://your-custom-domain.com' // Add any custom domains
   ], // adjust to your frontend URL/port

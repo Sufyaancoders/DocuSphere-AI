@@ -2,11 +2,11 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// Create a single reusable transporter
+// Create a single reusable transporter for Brevo SMTP
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465, 
-    secure: true, // Use SSL
+    host: process.env.MAIL_HOST || 'smtp-relay.brevo.com',
+    port: process.env.MAIL_PORT || 587, 
+    secure: false, // Use TLS for port 587
     auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -50,7 +50,7 @@ const sendEmail = async (email, subject, html) => {
         console.log("Content type:", html.includes("<!DOCTYPE html>") ? "HTML template" : "Simple text");
 
         const mailOptions = {
-            from: `SkillHouse <${process.env.MAIL_USER}>`,
+            from: `DocuSphere AI <${process.env.MAIL_FROM || process.env.MAIL_USER}>`,
             to: email,
             subject: subject,
             html: html,

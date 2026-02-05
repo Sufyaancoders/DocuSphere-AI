@@ -1,6 +1,8 @@
 const OTP = require('../models/otp');
 const User= require("../models/user")
+// Use SMTP mailer directly (Brevo)
 const sendEmail = require('../util/mailsender');
+console.log("Using SMTP for emails (Brevo)");
 const { otpVerificationEmail } = require('../mail/emailVerificationTemplete');
 const otpGenerator = require('otp-generator');
 exports.sendOTP = async (req, res) => {
@@ -49,19 +51,27 @@ exports.sendOTP = async (req, res) => {
         
         const otpInstance = await OTP.create(otpBody);
         console.log("OTP instance created:", otpInstance);
-        // Send OTP to user's email
-        const mailResponse = await sendEmail(
-            email,
-            "Verify Your Email - AI DocuSpehere",
-            otpVerificationEmail(otpGenerated , "user" ) // Add "User" as placeholder name
-        );
-        console.log("Mail response:", mailResponse);
-        // console.log("OTP sent:", otpGenerated);
+        
+        // Try to send email but don't let it block the response
+        let emailSent = false;
+        try {
+            const mailResponse = await sendEmail(
+                email,
+                "Verify Your Email - AI DocuSphere",
+                otpVerificationEmail(otpGenerated, "user")
+            );
+            console.log("✅ Mail sent successfully:", mailResponse);
+            emailSent = true;
+        } catch (emailError) {
+            console.error("❌ Email failed to send, but continuing:", emailError.message);
+            // Email failed but we'll still return success so user can verify with OTP from logs/DB
+        }
         
         return res.status(200).json({
             success: true,
-            message: 'OTP sent successfully',
-            // Don't send the actual OTP in response for security
+            message: emailSent ? 'OTP sent successfully' : 'OTP created - check console for code',
+            // FOR DEVELOPMENT ONLY - Remove in production
+            ...(process.env.NODE_ENV === 'development' && { otp: otpGenerated })
         });
         
     } catch (error) {

@@ -25,10 +25,18 @@ export function sendOtp(email, navigate) {
     dispatch(setLoading(true))
     
     try {
-      const response = await apiConnector("POST", SENDOTP_API, {
-        email,
-        checkUserPresent: true,
-      })
+      const response = await apiConnector(
+        "POST",
+        SENDOTP_API,
+        {
+          email,
+          checkUserPresent: true,
+        },
+        null,
+        null,
+        null,
+        true
+      )
       console.log("SENDOTP API RESPONSE............", response)
 
       console.log(response.data.success)
@@ -69,14 +77,21 @@ export function signUp(
         // Don't log passwords
       });
       
-      const response = await apiConnector("POST", SIGNUP_API, {
-        name,
-        
-        email,
-        password,
-        confirmPassword,
-        otp,
-      })
+      const response = await apiConnector(
+        "POST",
+        SIGNUP_API,
+        {
+          name,
+          email,
+          password,
+          confirmPassword,
+          otp,
+        },
+        null,
+        null,
+        null,
+        true
+      )
 
       console.log("SIGNUP API RESPONSE............", response)
 
@@ -126,10 +141,18 @@ export function login(email, password, navigate) {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("POST", LOGIN_API, {
-        email,
-        password,
-      })
+      const response = await apiConnector(
+        "POST",
+        LOGIN_API,
+        {
+          email,
+          password,
+        },
+        null,
+        null,
+        null,
+        true
+      )
 
       console.log("LOGIN API RESPONSE............", response)
 
@@ -176,7 +199,15 @@ export function getPasswordResetToken(email, setEmailSent) {
     try {
       console.log("Requesting password reset for:", email);
       
-      const response = await apiConnector("POST", RESETPASSTOKEN_API, { email });
+      const response = await apiConnector(
+        "POST",
+        RESETPASSTOKEN_API,
+        { email },
+        null,
+        null,
+        null,
+        true
+      );
       
       console.log("RESET PASSWORD TOKEN RESPONSE:", response);
       
@@ -212,7 +243,15 @@ export function resetPassword(password, confirmPassword, token) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     try{
-      const response = await apiConnector("POST", RESETPASSWORD_API, {password, confirmPassword, token});
+      const response = await apiConnector(
+        "POST",
+        RESETPASSWORD_API,
+        { password, confirmPassword, token },
+        null,
+        null,
+        null,
+        true
+      );
 
       console.log("RESET Password RESPONSE ... ", response);
 
