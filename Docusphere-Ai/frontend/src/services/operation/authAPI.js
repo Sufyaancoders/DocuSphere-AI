@@ -18,6 +18,7 @@ export function sendOtp(email, navigate) {
     const toastId = toast.loading("Loading...")
     if (otpRequestInProgress) {
       console.log("OTP request already in progress");
+      toast.dismiss(toastId);
       return;
     }
     
@@ -25,6 +26,9 @@ export function sendOtp(email, navigate) {
     dispatch(setLoading(true))
     
     try {
+      console.log("Sending OTP to:", email);
+      console.log("API URL:", SENDOTP_API);
+      
       const response = await apiConnector(
         "POST",
         SENDOTP_API,
@@ -49,7 +53,20 @@ export function sendOtp(email, navigate) {
       navigate("/verify-email")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      console.error("Error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        code: error.code
+      });
+      
+      if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+        toast.error("Network Error - Backend may be starting up. Please wait 30 seconds and try again.")
+      } else if (error.response?.status === 400) {
+        toast.error(error.response.data.message || "User already exists")
+      } else {
+        toast.error(error.response?.data?.message || "Could Not Send OTP")
+      }
     }
     otpRequestInProgress = false;
     dispatch(setLoading(false))
