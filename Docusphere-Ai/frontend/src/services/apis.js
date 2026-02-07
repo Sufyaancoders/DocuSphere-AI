@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:5001/api/v1"
-const BASE_URL = "https://redeploy-backend-ai.onrender.com/api/v1"
+const BASE_URL = "https://docusphere-ai-backend.onrender.com/api/v1"
 
 
 
